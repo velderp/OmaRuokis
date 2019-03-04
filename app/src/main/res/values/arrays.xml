@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="activity_level_array_fi">
+        <item>täysi lepo</item>
+        <item>kevyt</item>
+        <item>tavallinen</item>
+        <item>kohtalainen</item>
+        <item>kova</item>
+        <item>erittäin kova</item>
+    </string-array>
+</resources>

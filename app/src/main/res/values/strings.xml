@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">OmaRuokis</string>
+    <string name="action_settings">Asetukset</string>
+    <string name="user_info_header">Omat tiedot</string>
+    <string name="user_info_dob">Syntymäaika:</string>
+    <string name="user_info_sex">Sukupuoli:</string>
+    <string name="user_info_weight">Paino:</string>
+    <string name="user_info_height">Pituus:</string>
+    <string name="user_info_activity_level">Fyysinen aktiivisuus:</string>
+    <string name="button_save_info">Tallenna</string>
+    <string name="user_info_male">Mies</string>
+    <string name="user_info_female">Nainen</string>
+    <string name="empty_hint"> </string>
+    <string name="user_info_hint_height">175</string>
+    <string name="user_info_hint_weight">65</string>
+    <string name="user_info_hint_dob">31.1.1995</string>
+    <string name="unit_weight">kg</string>
+    <string name="unit_height">cm</string>
+    <string name="main_info_bmi">Painoindeksi:</string>
+    <string name="main_info_energy_consump">Energiankulutus (arv.):</string>
+    <string name="unit_energy">kcal</string>
+    <string name="main_meals_header">Ateriat</string>
+</resources>
