@@ -1,6 +1,8 @@
 package com.project.omaruokis;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,12 +14,17 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String PREF = "UserInfo";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Check for saved user info. If FirstRun is not set as false, start UserInfoActivity.
+        // checkSavedUserInfo();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,5 +60,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void checkSavedUserInfo() {
+        SharedPreferences prefGet = getSharedPreferences(PREF, Activity.MODE_PRIVATE);
+        if (prefGet.getBoolean("FirstRun", true)) {
+            Intent intent = new Intent(this, UserInfoActivity.class);
+            startActivity(intent);
+        }
     }
 }
