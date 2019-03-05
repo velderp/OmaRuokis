@@ -11,10 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PREF = "UserInfo";
+    private static final String PREF_USER = "UserInfo";
+    private static final String USER_WEIGHT = "Weight";
+    private static final String USER_INFO_FILLED = "InfoFilled";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // Check for saved user info. If FirstRun is not set as false, start UserInfoActivity.
-        // checkSavedUserInfo();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +34,20 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefGet = getSharedPreferences(PREF_USER, Activity.MODE_PRIVATE);
+        // Check for saved user info. If InfoFilled is not set as true, UserInfoActivity is started.
+        if (!prefGet.getBoolean(USER_INFO_FILLED, false)) {
+            Intent intent = new Intent(this, UserInfoActivity.class);
+            startActivity(intent);
+        } else {
+            EditText et = findViewById(R.id.editMainWeight);
+            et.setText(prefGet.getString(USER_WEIGHT, ""));
+        }
     }
 
     @Override
@@ -62,11 +76,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void checkSavedUserInfo() {
-        SharedPreferences prefGet = getSharedPreferences(PREF, Activity.MODE_PRIVATE);
-        if (prefGet.getBoolean("FirstRun", true)) {
-            Intent intent = new Intent(this, UserInfoActivity.class);
-            startActivity(intent);
-        }
-    }
 }
