@@ -1,28 +1,24 @@
 package com.project.omaruokis;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.RemoteAction;
 import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
+import android.widget.Spinner;
 
 public class UserInfoActivity extends AppCompatActivity {
 
-    private static final String PREF_USER = "UserInfo";
-    private static final String USER_DOB = "DateOfBirth";
-    private static final String USER_SEX = "Sex";
-    private static final String USER_WEIGHT = "Weight";
-    private static final String USER_HEIGHT = "Height";
-    private static final String USER_PAL = "ActivityLevel";
-    private static final String USER_INFO_FILLED = "InfoFilled";
+    static final String PREF_USER = "UserInfo";
+    static final String USER_DOB = "DateOfBirth";
+    static final String USER_SEX = "Sex";
+    static final String USER_WEIGHT = "Weight";
+    static final String USER_HEIGHT = "Height";
+    static final String USER_PAL = "ActivityLevel";
+    static final String USER_INFO_FILLED = "InfoFilled";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +64,11 @@ public class UserInfoActivity extends AppCompatActivity {
         value = (rg.getCheckedRadioButtonId() == R.id.radioButtonMale) ? "M" : "F";
         prefEditor.putString(USER_SEX, value);
         value = ((EditText) findViewById(R.id.editWeight)).getText().toString();
-        prefEditor.putString(USER_WEIGHT, value);
+        prefEditor.putInt(USER_WEIGHT, Integer.parseInt(value));
         value = ((EditText) findViewById(R.id.editHeight)).getText().toString();
-        prefEditor.putString(USER_HEIGHT, value);
+        prefEditor.putInt(USER_HEIGHT, Integer.parseInt(value));
+        Spinner spinner = findViewById(R.id.spinnerActivityLevel);
+        prefEditor.putInt(USER_PAL, spinner.getSelectedItemPosition());
         prefEditor.putBoolean(USER_INFO_FILLED, true);
         prefEditor.apply();
     }
@@ -79,14 +77,16 @@ public class UserInfoActivity extends AppCompatActivity {
         EditText et = findViewById(R.id.editDOB);
         et.setText(prefGet.getString(USER_DOB, ""));
         et = findViewById(R.id.editWeight);
-        et.setText(prefGet.getString(USER_WEIGHT, ""));
+        et.setText(Integer.toString(prefGet.getInt(USER_WEIGHT, 1)));
         et = findViewById(R.id.editHeight);
-        et.setText(prefGet.getString(USER_HEIGHT, ""));
+        et.setText(Integer.toString(prefGet.getInt(USER_HEIGHT, 1)));
         RadioGroup rg = findViewById(R.id.radioGroupSex);
         if (prefGet.getString(USER_SEX, "M").equals("M")) {
             rg.check(R.id.radioButtonMale);
         } else {
             rg.check(R.id.radioButtonFemale);
         }
+        Spinner spinner = findViewById(R.id.spinnerActivityLevel);
+        spinner.setSelection(prefGet.getInt(USER_PAL, 0));
     }
 }

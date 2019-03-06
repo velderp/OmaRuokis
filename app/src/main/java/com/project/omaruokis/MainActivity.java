@@ -12,12 +12,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final String PREF_USER = "UserInfo";
-    private static final String USER_WEIGHT = "Weight";
-    private static final String USER_INFO_FILLED = "InfoFilled";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +36,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences prefGet = getSharedPreferences(PREF_USER, Activity.MODE_PRIVATE);
+        SharedPreferences prefGet = getSharedPreferences(UserInfoActivity.PREF_USER, Activity.MODE_PRIVATE);
         // Check for saved user info. If InfoFilled is not set as true, UserInfoActivity is started.
-        if (!prefGet.getBoolean(USER_INFO_FILLED, false)) {
+        if (!prefGet.getBoolean(UserInfoActivity.USER_INFO_FILLED, false)) {
             Intent intent = new Intent(this, UserInfoActivity.class);
             startActivity(intent);
         } else {
             EditText et = findViewById(R.id.editMainWeight);
-            et.setText(prefGet.getString(USER_WEIGHT, ""));
+            et.setText(Integer.toString(prefGet.getInt(UserInfoActivity.USER_WEIGHT, 1)));
+            Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
+            spinner.setSelection(prefGet.getInt(UserInfoActivity.USER_PAL, 0));
         }
     }
 
