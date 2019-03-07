@@ -23,44 +23,29 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
     public void checkAndSave(View view) {
+        UserPrefs userPrefs = new UserPrefs(this);
+        InputChecker checker = new InputChecker();
+        String date = ((EditText) findViewById(R.id.editDOB)).getText().toString();
+        String weight = ((EditText) findViewById(R.id.editWeight)).getText().toString();
+        String height = ((EditText) findViewById(R.id.editHeight)).getText().toString();
+        RadioGroup rg = findViewById(R.id.radioGroupSex);
 
-        if (checkInputValidity()) {
-            saveUserInfo();
+        if (userPrefs.prefSetUserDOB(date)
+                && checker.dateBeforeCurrent(date)
+                && rg.getCheckedRadioButtonId() != -1
+                && userPrefs.prefSetUserWeight(weight)
+                && userPrefs.prefSetUserHeight(height)) {
+            String sex = (rg.getCheckedRadioButtonId() == R.id.radioButtonMale) ? "M" : "F";
+            userPrefs.prefSetUserSex(sex);
+            Spinner spinner = findViewById(R.id.spinnerActivityLevel);
+            userPrefs.prefSetUserPAL(spinner.getSelectedItemPosition());
+            userPrefs.prefSetInfoFilled(true);
             Snackbar.make(view, getString(R.string.user_info_saved), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         } else {
             Snackbar.make(view, getString(R.string.user_info_error), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
-    }
-
-    private boolean checkInputValidity() {
-        InputChecker checker = new InputChecker();
-        String date = ((EditText) findViewById(R.id.editDOB)).getText().toString();
-        String weight = ((EditText) findViewById(R.id.editWeight)).getText().toString();
-        String height = ((EditText) findViewById(R.id.editHeight)).getText().toString();
-        RadioGroup rg = findViewById(R.id.radioGroupSex);
-        return checker.checkDateValidity(date, 1900, 2100)
-                && checker.dateBeforeCurrent(date)
-                && rg.getCheckedRadioButtonId() != -1
-                && checker.checkInt(weight,1, 635)
-                && checker.checkInt(height, 24, 272);
-    }
-
-    private void saveUserInfo() {
-        UserPrefs userPrefs = new UserPrefs(this);
-        String value = ((EditText) findViewById(R.id.editDOB)).getText().toString();
-        userPrefs.prefSetUserDOB(value);
-        RadioGroup rg = findViewById(R.id.radioGroupSex);
-        value = (rg.getCheckedRadioButtonId() == R.id.radioButtonMale) ? "M" : "F";
-        userPrefs.prefSetUserSex(value);
-        value = ((EditText) findViewById(R.id.editWeight)).getText().toString();
-        userPrefs.prefSetUserWeight(Integer.parseInt(value));
-        value = ((EditText) findViewById(R.id.editHeight)).getText().toString();
-        userPrefs.prefSetUserHeight(Integer.parseInt(value));
-        Spinner spinner = findViewById(R.id.spinnerActivityLevel);
-        userPrefs.prefSetUserPAL(spinner.getSelectedItemPosition());
-        userPrefs.prefSetInfoFilled(true);
     }
 
     private void getUserInfo() {

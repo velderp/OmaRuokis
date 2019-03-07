@@ -39,6 +39,17 @@ class InputChecker {
         return date.before(current);
     }
 
+    String formatDate(String input) {
+        DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+        Date date;
+        try {
+            date = df.parse(input);
+        } catch (ParseException e) {
+            return "00.00.0000";
+        }
+        return df.format(date);
+    }
+
     boolean checkInt(String input, int min, int max) {
         int inputInt;
         try {

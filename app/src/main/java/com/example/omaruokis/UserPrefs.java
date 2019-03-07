@@ -9,7 +9,7 @@ class UserPrefs {
     private static final String USER_SEX = "Sex";
     private static final String USER_WEIGHT = "Weight";
     private static final String USER_HEIGHT = "Height";
-    private static final String USER_PAL = "ActivityLevel";
+    private static final String USER_PAL = "DefaultActivityLevel";
     private static final String USER_INFO_FILLED = "InfoFilled";
     private Context context;
 
@@ -25,12 +25,20 @@ class UserPrefs {
         return prefGet().edit();
     }
 
+    private InputChecker checker() {
+        return new InputChecker();
+    }
+
     String prefGetUserDOB() {
         return prefGet().getString(USER_DOB, "");
     }
 
-    void prefSetUserDOB(String dateOfBirth) {
-        prefEdit().putString(USER_DOB, dateOfBirth).apply();
+    boolean prefSetUserDOB(String dateOfBirth) {
+        if (checker().checkDateValidity(dateOfBirth, 1900, 2100)) {
+            prefEdit().putString(USER_DOB, checker().formatDate(dateOfBirth)).apply();
+            return true;
+        }
+        return false;
     }
 
     String prefGetUserSex() {
@@ -45,16 +53,24 @@ class UserPrefs {
         return prefGet().getInt(USER_HEIGHT, -1);
     }
 
-    void prefSetUserHeight(int height) {
-        prefEdit().putInt(USER_HEIGHT, height).apply();
+    boolean prefSetUserHeight(String height) {
+        if (checker().checkInt(height, 24, 272)) {
+            prefEdit().putInt(USER_HEIGHT, Integer.parseInt(height)).apply();
+            return true;
+        }
+        return false;
     }
 
     int prefGetUserWeight() {
         return prefGet().getInt(USER_WEIGHT, -1);
     }
 
-    void prefSetUserWeight(int weight) {
-        prefEdit().putInt(USER_WEIGHT, weight).apply();
+    boolean prefSetUserWeight(String weight) {
+        if (checker().checkInt(weight, 1, 635)) {
+            prefEdit().putInt(USER_WEIGHT, Integer.parseInt(weight)).apply();
+            return true;
+        }
+        return false;
     }
 
     int prefGetUserPAL() {
