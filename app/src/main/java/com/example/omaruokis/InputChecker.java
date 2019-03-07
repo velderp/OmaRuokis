@@ -1,4 +1,4 @@
-package com.project.omaruokis;
+package com.example.omaruokis;
 
 import java.text.DateFormat;
 import java.text.ParseException;

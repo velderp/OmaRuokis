@@ -1,7 +1,5 @@
-package com.project.omaruokis;
+package com.example.omaruokis;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,30 +8,24 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-public class UserInfoActivity extends AppCompatActivity {
+import com.project.omaruokis.R;
 
-    static final String PREF_USER = "UserInfo";
-    static final String USER_DOB = "DateOfBirth";
-    static final String USER_SEX = "Sex";
-    static final String USER_WEIGHT = "Weight";
-    static final String USER_HEIGHT = "Height";
-    static final String USER_PAL = "ActivityLevel";
-    static final String USER_INFO_FILLED = "InfoFilled";
+public class UserInfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
-        SharedPreferences prefGet = getSharedPreferences(PREF_USER, Activity.MODE_PRIVATE);
-        if (prefGet.getBoolean(USER_INFO_FILLED, false)) {
-            readUserInfo();
+        UserPrefs userPrefs = new UserPrefs(this);
+        if (userPrefs.prefGetInfoFilled()) {
+            getUserInfo();
         }
     }
 
     public void checkAndSave(View view) {
 
-        if (checkValidity()) {
-            writeUserInfo();
+        if (checkInputValidity()) {
+            saveUserInfo();
             Snackbar.make(view, getString(R.string.user_info_saved), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         } else {
@@ -42,7 +34,7 @@ public class UserInfoActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkValidity() {
+    private boolean checkInputValidity() {
         InputChecker checker = new InputChecker();
         String date = ((EditText) findViewById(R.id.editDOB)).getText().toString();
         String weight = ((EditText) findViewById(R.id.editWeight)).getText().toString();
@@ -55,38 +47,39 @@ public class UserInfoActivity extends AppCompatActivity {
                 && checker.checkInt(height, 24, 272);
     }
 
-    private void writeUserInfo() {
-        SharedPreferences prefPut = getSharedPreferences(PREF_USER, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor prefEditor = prefPut.edit();
+    private void saveUserInfo() {
+        UserPrefs userPrefs = new UserPrefs(this);
         String value = ((EditText) findViewById(R.id.editDOB)).getText().toString();
-        prefEditor.putString(USER_DOB, value);
+        userPrefs.prefSetUserDOB(value);
         RadioGroup rg = findViewById(R.id.radioGroupSex);
         value = (rg.getCheckedRadioButtonId() == R.id.radioButtonMale) ? "M" : "F";
-        prefEditor.putString(USER_SEX, value);
+        userPrefs.prefSetUserSex(value);
         value = ((EditText) findViewById(R.id.editWeight)).getText().toString();
-        prefEditor.putInt(USER_WEIGHT, Integer.parseInt(value));
+        userPrefs.prefSetUserWeight(Integer.parseInt(value));
         value = ((EditText) findViewById(R.id.editHeight)).getText().toString();
-        prefEditor.putInt(USER_HEIGHT, Integer.parseInt(value));
+        userPrefs.prefSetUserHeight(Integer.parseInt(value));
         Spinner spinner = findViewById(R.id.spinnerActivityLevel);
-        prefEditor.putInt(USER_PAL, spinner.getSelectedItemPosition());
-        prefEditor.putBoolean(USER_INFO_FILLED, true);
-        prefEditor.apply();
+        userPrefs.prefSetUserPAL(spinner.getSelectedItemPosition());
+        userPrefs.prefSetInfoFilled(true);
     }
-    private void readUserInfo() {
-        SharedPreferences prefGet = getSharedPreferences(PREF_USER, Activity.MODE_PRIVATE);
+
+    private void getUserInfo() {
+        UserPrefs userPrefs = new UserPrefs(this);
         EditText et = findViewById(R.id.editDOB);
-        et.setText(prefGet.getString(USER_DOB, ""));
+        et.setText(userPrefs.prefGetUserDOB());
         et = findViewById(R.id.editWeight);
-        et.setText(Integer.toString(prefGet.getInt(USER_WEIGHT, 1)));
+        et.setText(Integer.toString(userPrefs.prefGetUserWeight()));
         et = findViewById(R.id.editHeight);
-        et.setText(Integer.toString(prefGet.getInt(USER_HEIGHT, 1)));
+        et.setText(Integer.toString(userPrefs.prefGetUserHeight()));
         RadioGroup rg = findViewById(R.id.radioGroupSex);
-        if (prefGet.getString(USER_SEX, "M").equals("M")) {
+        if (userPrefs.prefGetUserSex().equals("M")) {
             rg.check(R.id.radioButtonMale);
         } else {
             rg.check(R.id.radioButtonFemale);
         }
         Spinner spinner = findViewById(R.id.spinnerActivityLevel);
-        spinner.setSelection(prefGet.getInt(USER_PAL, 0));
+        spinner.setSelection(userPrefs.prefGetUserPAL());
     }
+
+
 }

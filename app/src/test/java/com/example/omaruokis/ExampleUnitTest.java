@@ -1,4 +1,4 @@
-package com.project.omaruokis;
+package com.example.omaruokis;
 
 import org.junit.Test;
 

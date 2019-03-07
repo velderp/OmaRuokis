@@ -1,4 +1,4 @@
-package com.project.omaruokis;
+package com.example.omaruokis;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

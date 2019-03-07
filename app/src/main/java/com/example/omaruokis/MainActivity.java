@@ -1,8 +1,6 @@
-package com.project.omaruokis;
+package com.example.omaruokis;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.project.omaruokis.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,16 +36,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences prefGet = getSharedPreferences(UserInfoActivity.PREF_USER, Activity.MODE_PRIVATE);
         // Check for saved user info. If InfoFilled is not set as true, UserInfoActivity is started.
-        if (!prefGet.getBoolean(UserInfoActivity.USER_INFO_FILLED, false)) {
+        UserPrefs userPrefs = new UserPrefs(this);
+        if (!userPrefs.prefGetInfoFilled()) {
             Intent intent = new Intent(this, UserInfoActivity.class);
             startActivity(intent);
         } else {
             EditText et = findViewById(R.id.editMainWeight);
-            et.setText(Integer.toString(prefGet.getInt(UserInfoActivity.USER_WEIGHT, 1)));
+            et.setText(Integer.toString(userPrefs.prefGetUserWeight()));
             Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
-            spinner.setSelection(prefGet.getInt(UserInfoActivity.USER_PAL, 0));
+            spinner.setSelection(userPrefs.prefGetUserPAL());
         }
     }
 
