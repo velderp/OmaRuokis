@@ -31,7 +31,6 @@ public class UserInfoActivity extends AppCompatActivity {
         RadioGroup rg = findViewById(R.id.radioGroupSex);
 
         if (userPrefs.prefSetUserDob(date)
-                && checker.dateBeforeCurrent(date)
                 && rg.getCheckedRadioButtonId() != -1
                 && userPrefs.prefSetUserWeight(weight)
                 && userPrefs.prefSetUserHeight(height)) {

@@ -15,6 +15,8 @@ class UserPrefs {
     private static final int MAX_HEIGHT = 272;
     static final int MIN_WEIGHT = 1;
     static final int MAX_WEIGHT = 635;
+    static final int MIN_YEAR = 1900;
+    static final int MAX_YEAR = 2100;
     private Context context;
 
     UserPrefs(Context context) {
@@ -38,7 +40,8 @@ class UserPrefs {
     }
 
     boolean prefSetUserDob(String dateOfBirth) {
-        if (checker().checkDateValidity(dateOfBirth, 1900, 2100)) {
+        if (checker().checkDateValidity(dateOfBirth, MIN_YEAR, MAX_YEAR)
+                && checker().dateBeforeCurrent(dateOfBirth)) {
             prefEdit().putString(USER_DOB, checker().formatDate(dateOfBirth)).apply();
             return true;
         }
