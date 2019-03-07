@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="12.12.2019"
+            android:text="@string/empty_hint"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +54,6 @@
             android:gravity="center_horizontal"
             android:hint="@string/empty_hint"
             android:inputType="number"
-            android:text="@string/user_info_hint_weight"
             app:layout_constraintEnd_toStartOf="@+id/textView3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textMainDate" />
@@ -98,7 +97,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editMainWeight" />
 
         <TextView
-            android:id="@+id/textMainBMI"
+            android:id="@+id/textMainBmi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -109,17 +108,17 @@
             app:layout_constraintTop_toBottomOf="@+id/spinnerMainActivityLevel" />
 
         <TextView
-            android:id="@+id/textMainCalcBMI"
+            android:id="@+id/textMainCalcBmi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="22,22"
+            android:text="@string/empty_hint"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/spinnerMainActivityLevel" />
 
         <TextView
-            android:id="@+id/textMainEnergyConsump"
+            android:id="@+id/textMainTee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -127,17 +126,17 @@
             android:text="@string/main_info_energy_consump"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textMainBMI" />
+            app:layout_constraintTop_toBottomOf="@+id/textMainBmi" />
 
         <TextView
-            android:id="@+id/textMainCalcEnergyConsump"
+            android:id="@+id/textMainCalcTee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="2345"
+            android:text="@string/empty_hint"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textMainBMI" />
+            app:layout_constraintTop_toBottomOf="@+id/textMainBmi" />
 
         <TextView
             android:id="@+id/textMainEnergyUnit"
@@ -147,8 +146,8 @@
             android:layout_marginTop="8dp"
             android:text="@string/unit_energy"
             android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/textMainCalcEnergyConsump"
-            app:layout_constraintTop_toBottomOf="@+id/textMainBMI" />
+            app:layout_constraintStart_toEndOf="@+id/textMainCalcTee"
+            app:layout_constraintTop_toBottomOf="@+id/textMainBmi" />
 
         <TextView
             android:id="@+id/textMainMealsHeader"
@@ -159,6 +158,6 @@
             android:text="@string/main_meals_header"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textMainEnergyConsump" />
+            app:layout_constraintTop_toBottomOf="@+id/textMainTee" />
     </android.support.constraint.ConstraintLayout>
     </ScrollView>

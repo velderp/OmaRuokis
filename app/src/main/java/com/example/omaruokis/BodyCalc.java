@@ -1,6 +1,6 @@
 package com.example.omaruokis;
 
-public class BodyCalc {
+class BodyCalc {
     private int weight;
     private int height;
     private int age;
@@ -8,31 +8,31 @@ public class BodyCalc {
     private double activityLevel;
 
 
-    public BodyCalc(int weight, int height, String sex, double activityLevel,
-                    String dateofbirth, String date) {
+    BodyCalc(int weight, int height, String sex, double activityLevel,
+                    String dateOfBirth, String date) {
         this.weight = weight;
         this.height = height;
         this.sex = sex;
         this.activityLevel = activityLevel;
-        this.age = calcAge(dateofbirth, date);
+        this.age = calcAge(dateOfBirth, date);
     }
 
-    public int calcBMR(){
+    private int calcBmr(){
         int sex = (this.sex.equals("M")) ? 5 : -161;
         return (int) (10 * this.weight + 6.25 * this.height - 5 * this.age + sex);
 
     }
-    public int calcTEE(){
-        return (int) (calcBMR() * this.activityLevel);
+    int calcTee(){
+        return (int) (calcBmr() * this.activityLevel);
 
     }
 
-    public double calcBMI(){
-        return this.weight / (this.height / 100) * (this.height / 100);
+    double calcBmi(){
+        return this.weight / ((this.height / 100.0) * (this.height / 100.0));
     }
 
-    public int calcAge(String dateofbirth, String date){
-        String[] partsDOB = dateofbirth.split("\\.");
+    private int calcAge(String dateOfBirth, String date){
+        String[] partsDOB = dateOfBirth.split("\\.");
         String[] partsDate = date.split("\\.");
 
         //

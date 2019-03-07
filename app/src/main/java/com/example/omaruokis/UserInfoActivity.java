@@ -25,12 +25,12 @@ public class UserInfoActivity extends AppCompatActivity {
     public void checkAndSave(View view) {
         UserPrefs userPrefs = new UserPrefs(this);
         InputChecker checker = new InputChecker();
-        String date = ((EditText) findViewById(R.id.editDOB)).getText().toString();
+        String date = ((EditText) findViewById(R.id.editDob)).getText().toString();
         String weight = ((EditText) findViewById(R.id.editWeight)).getText().toString();
         String height = ((EditText) findViewById(R.id.editHeight)).getText().toString();
         RadioGroup rg = findViewById(R.id.radioGroupSex);
 
-        if (userPrefs.prefSetUserDOB(date)
+        if (userPrefs.prefSetUserDob(date)
                 && checker.dateBeforeCurrent(date)
                 && rg.getCheckedRadioButtonId() != -1
                 && userPrefs.prefSetUserWeight(weight)
@@ -38,7 +38,7 @@ public class UserInfoActivity extends AppCompatActivity {
             String sex = (rg.getCheckedRadioButtonId() == R.id.radioButtonMale) ? "M" : "F";
             userPrefs.prefSetUserSex(sex);
             Spinner spinner = findViewById(R.id.spinnerActivityLevel);
-            userPrefs.prefSetUserPAL(spinner.getSelectedItemPosition());
+            userPrefs.prefSetUserPal(spinner.getSelectedItemPosition());
             userPrefs.prefSetInfoFilled(true);
             Snackbar.make(view, getString(R.string.user_info_saved), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -50,8 +50,8 @@ public class UserInfoActivity extends AppCompatActivity {
 
     private void getUserInfo() {
         UserPrefs userPrefs = new UserPrefs(this);
-        EditText et = findViewById(R.id.editDOB);
-        et.setText(userPrefs.prefGetUserDOB());
+        EditText et = findViewById(R.id.editDob);
+        et.setText(userPrefs.prefGetUserDob());
         et = findViewById(R.id.editWeight);
         et.setText(Integer.toString(userPrefs.prefGetUserWeight()));
         et = findViewById(R.id.editHeight);
@@ -63,7 +63,7 @@ public class UserInfoActivity extends AppCompatActivity {
             rg.check(R.id.radioButtonFemale);
         }
         Spinner spinner = findViewById(R.id.spinnerActivityLevel);
-        spinner.setSelection(userPrefs.prefGetUserPAL());
+        spinner.setSelection(userPrefs.prefGetUserPal());
     }
 
 

@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 class InputChecker {
-    private static final String DATE_FORMAT = "dd.MM.yyyy";
+    static final String DATE_FORMAT = "d.M.yyyy";
 
     InputChecker() {
     }

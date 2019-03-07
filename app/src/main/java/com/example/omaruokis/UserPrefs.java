@@ -11,6 +11,10 @@ class UserPrefs {
     private static final String USER_HEIGHT = "Height";
     private static final String USER_PAL = "DefaultActivityLevel";
     private static final String USER_INFO_FILLED = "InfoFilled";
+    private static final int MIN_HEIGHT = 24;
+    private static final int MAX_HEIGHT = 272;
+    static final int MIN_WEIGHT = 1;
+    static final int MAX_WEIGHT = 635;
     private Context context;
 
     UserPrefs(Context context) {
@@ -29,11 +33,11 @@ class UserPrefs {
         return new InputChecker();
     }
 
-    String prefGetUserDOB() {
+    String prefGetUserDob() {
         return prefGet().getString(USER_DOB, "");
     }
 
-    boolean prefSetUserDOB(String dateOfBirth) {
+    boolean prefSetUserDob(String dateOfBirth) {
         if (checker().checkDateValidity(dateOfBirth, 1900, 2100)) {
             prefEdit().putString(USER_DOB, checker().formatDate(dateOfBirth)).apply();
             return true;
@@ -49,35 +53,35 @@ class UserPrefs {
         prefEdit().putString(USER_SEX, sex).apply();
     }
 
-    int prefGetUserHeight() {
-        return prefGet().getInt(USER_HEIGHT, -1);
-    }
-
-    boolean prefSetUserHeight(String height) {
-        if (checker().checkInt(height, 24, 272)) {
-            prefEdit().putInt(USER_HEIGHT, Integer.parseInt(height)).apply();
-            return true;
-        }
-        return false;
-    }
-
     int prefGetUserWeight() {
         return prefGet().getInt(USER_WEIGHT, -1);
     }
 
     boolean prefSetUserWeight(String weight) {
-        if (checker().checkInt(weight, 1, 635)) {
+        if (checker().checkInt(weight, MIN_WEIGHT, MAX_WEIGHT)) {
             prefEdit().putInt(USER_WEIGHT, Integer.parseInt(weight)).apply();
             return true;
         }
         return false;
     }
 
-    int prefGetUserPAL() {
+    int prefGetUserHeight() {
+        return prefGet().getInt(USER_HEIGHT, -1);
+    }
+
+    boolean prefSetUserHeight(String height) {
+        if (checker().checkInt(height, MIN_HEIGHT, MAX_HEIGHT)) {
+            prefEdit().putInt(USER_HEIGHT, Integer.parseInt(height)).apply();
+            return true;
+        }
+        return false;
+    }
+
+    int prefGetUserPal() {
         return prefGet().getInt(USER_PAL, 0);
     }
 
-    void prefSetUserPAL(int activityLevel) {
+    void prefSetUserPal(int activityLevel) {
         prefEdit().putInt(USER_PAL, activityLevel).apply();
     }
 
