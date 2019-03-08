@@ -18,13 +18,16 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryLight"
         android:ems="10"
-        android:hint="FoodName..."
+        android:hint="@string/foodname"
+        android:imeOptions="actionSearch"
+        android:inputType="textShortMessage"
         android:padding="12dp"
         android:textAppearance="@android:style/TextAppearance.Large"
         android:textColor="@color/colorTextPrimary"
         app:layout_constraintEnd_toStartOf="@+id/buttonFind"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -43,7 +46,7 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="buttonFind"
-        android:text="Find"
+        android:text="@string/find"
         android:textAppearance="@android:style/TextAppearance.Large"
         android:textColor="@color/colorTextPrimary"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
@@ -55,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Favorites:"
+        android:text="@string/favorites"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextFind" />
 

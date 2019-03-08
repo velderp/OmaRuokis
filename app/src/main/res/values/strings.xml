@@ -25,4 +25,7 @@
     <string name="hint_word">Hakusana</string>
     <string name="title_activity_food_details">Ruoan tiedot</string>
     <string name="search">Haku</string>
+    <string name="foodname">FoodName...</string>
+    <string name="find">Find</string>
+    <string name="favorites">Favorites:</string>
 </resources>

@@ -48,6 +48,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
             // Covers the case of data not being ready yet.
             holder.wordItemView.setText("No Food");
         }
+
         if(favoritesFoodIds.contains(Integer.valueOf(position))){
             holder.imageView.setImageAlpha(255);
         }else{
@@ -70,10 +71,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
         notifyDataSetChanged();
     }
 
-
-    void setRepository(FoodRepository repository){
-        mRepository = repository;
-    }
 
     // getItemCount() is called many times, and when it is first called,
     // mWords has not been updated (means initially, it's null, and we can't return null).

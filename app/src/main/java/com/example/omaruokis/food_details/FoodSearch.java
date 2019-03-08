@@ -43,13 +43,6 @@ public class FoodSearch extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //fab
-            }
-        });
 
         mFoodViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
         listLiveDataFoodNameFi = mFoodViewModel.findFoodByName("peruna");
@@ -58,7 +51,7 @@ public class FoodSearch extends AppCompatActivity {
             public void onChanged(@Nullable final List<FoodNameFi> foodNameFis) {
                 //update the cached copy of the foods in the adapter.
                 TextView textView = findViewById(R.id.textView3);
-                textView.setText("Favorites: " + foodNameFis.size());
+                //textView.setText("Favorites: " + foodNameFis.size());
                 adapter.setFoods(foodNameFis);
                 Log.d(FoodRoomDatabase.TAG, "onChanged: Observer Food");
             }
@@ -107,7 +100,7 @@ public class FoodSearch extends AppCompatActivity {
                 int i = foodNameFis.size();
                 textView.setText("Results: " + i);
                 adapter.setFoods(foodNameFis);
-                Toast.makeText(getApplicationContext(), "Find count: " + i + foodNameFis.get(i-1).getFoodName(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Find count: " + i + foodNameFis.get(i-1).getFoodName(), Toast.LENGTH_LONG).show();
             }
         });
     }
