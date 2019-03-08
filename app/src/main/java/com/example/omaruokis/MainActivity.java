@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.omaruokis.food_details.FoodSearch;
 import com.project.omaruokis.R;
 
 import java.text.DateFormat;
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_user_info) {
             startActivity(new Intent(this, UserInfoActivity.class));
             return true;
+        } else if (id == R.id.action_search){
+            startActivity(new Intent(this, FoodSearch.class));
         }
 
         return super.onOptionsItemSelected(item);

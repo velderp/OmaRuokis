@@ -22,6 +22,21 @@
         <activity android:name="com.example.omaruokis.UserInfoActivity"
             android:parentActivityName="com.example.omaruokis.MainActivity" >
         </activity>
+        <activity
+            android:name="com.example.omaruokis.food_details.FoodDetailsActivity"
+            android:label="@string/title_activity_food_details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name="com.example.omaruokis.food_details.FoodFindResults" />
+        <activity
+            android:name="com.example.omaruokis.food_details.FoodSearch"
+            android:label="FoodSearch"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

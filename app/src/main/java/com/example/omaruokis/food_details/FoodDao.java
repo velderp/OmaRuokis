@@ -1,0 +1,39 @@
+package com.example.omaruokis.food_details;
+
+import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
+import android.arch.persistence.room.Query;
+
+import java.util.List;
+
+@Dao
+public interface FoodDao {
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insert(Favorite favorite);
+
+    @Query("SELECT FOODID FROM favorite WHERE FOODID == :foodid")
+    List<Integer> findFavorite(int foodid);
+
+    @Query("SELECT FOODID FROM favorite")
+    LiveData<List<Favorite>> getAllFavorites();
+
+    @Delete
+    void deleteFavorite(Favorite favorite);
+
+    @Query("SELECT * FROM foodname_FI WHERE FOODNAME LIKE :foodName ORDER BY FOODNAME NOT LIKE :foodNameStart")
+    LiveData<List<FoodNameFi>> findFoodByName(String foodName, String foodNameStart);
+
+    @Query("SELECT * FROM component_value WHERE FOODID == :foodId")
+    LiveData<List<ComponentValue>> getFoodIdComponetValues(int foodId);
+
+    @Query( "select eufdname_FI.DESCRIPT, component_value.BESTLOC from component_value " +
+            "inner join eufdname_FI on component_value.EUFDNAME = eufdname_FI.THSCODE " +
+            "where component_value.FOODID = :foodId")
+    LiveData<List<FoodDetails>> findFoodDetails(int foodId);
+
+
+}

@@ -12,4 +12,7 @@
         android:orderInCategory="99"
         android:title="@string/user_info_header"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/search" />
 </menu>
