@@ -22,14 +22,27 @@ import com.project.omaruokis.R;
 
 import java.util.List;
 
+/**
+ * Android Activity ui logic for food search, search result and food favorites.
+ * before search favorites are shown in recyclerview after search,
+ * search results are shown in same recyclerview replacing favorites.
+ * By taping food name in recyclerview is FoodDetailsActivity launched.
+ * By taping imageview star next to food name is foodId added to favorites.
+ * @author m
+ */
 public class FoodSearchActivity extends AppCompatActivity {
 
-    public static final String EXTRA_MESSAGE = "com.example.omaruokis.food_details.MESSAGE";
-    private FoodListAdapter adapter;
-
-    private FoodViewModel mFoodViewModel;
+    public static final String EXTRA_MESSAGE = "com.example.omaruokis.food_details.MESSAGE"; //String for use of Intends
+    private FoodListAdapter adapter; //recyclerview adapter for displaying list of items
+    private FoodViewModel mFoodViewModel; //FoodViewModel is for keeping non ui logic separate
     private LiveData<List<FoodNameFi>> listLiveDataFoodNameFi;
 
+    /**
+     * Handles FoodSearchActivity wigets and uses FoodViewModel metholds for non ui operations.
+     * Is run when activity is started or recreated for example in screen rotation events.
+     * Listens LiveData changes in favorite list and foodname list caused by user searches or user favorites.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +72,7 @@ public class FoodSearchActivity extends AppCompatActivity {
         mFoodViewModel.getAllFavorites().observe(this, new Observer<List<Favorite>>() {
             @Override
             public void onChanged(@Nullable List<Favorite> favorites) {
+                //update the cached copy of the favoritesFoodIds in the adapter
                 adapter.setFavorites(favorites);
                 Log.d(FoodRoomDatabase.TAG, "onChanged: Observer Favorite");
                 for(int i = 0; i < favorites.size(); i++){
