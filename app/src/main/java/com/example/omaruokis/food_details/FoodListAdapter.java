@@ -101,7 +101,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
                 //Pass foodName object to FoodDetailsActivity and start it.
                 Log.d(FoodRoomDatabase.TAG, "onClick: " + v.toString());
                 Intent intent = new Intent(v.getContext(), FoodDetailsActivity.class);
-                intent.putExtra(FoodSearch.EXTRA_MESSAGE, foodNameFis.get(getLayoutPosition()));
+                intent.putExtra(FoodSearchActivity.EXTRA_MESSAGE, foodNameFis.get(getLayoutPosition()));
                 v.getContext().startActivity(intent);
             }else if(v == imageView){
                 //add taped object FOODID to favorite table if it is not there else remove it from there

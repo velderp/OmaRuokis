@@ -6,6 +6,7 @@ import android.arch.lifecycle.LiveData;
 
 import java.util.List;
 
+//For not UI logic
 public class FoodViewModel extends AndroidViewModel {
 
     private FoodRepository mRepository;

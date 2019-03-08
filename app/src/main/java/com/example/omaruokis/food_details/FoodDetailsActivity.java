@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.project.omaruokis.R;
 
@@ -30,7 +29,7 @@ public class FoodDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        FoodName foodName = intent.getParcelableExtra(FoodSearch.EXTRA_MESSAGE);
+        FoodName foodName = intent.getParcelableExtra(FoodSearchActivity.EXTRA_MESSAGE);
         textViewDetails = findViewById(R.id.textViewFoodId );
         textViewDetails.setText(foodName.getFoodName());
 

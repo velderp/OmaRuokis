@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorScreenBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.omaruokis.food_details.FoodSearch"
+    tools:context="com.example.omaruokis.food_details.FoodSearchActivity"
     tools:showIn="@layout/activity_food_search"
     >
 

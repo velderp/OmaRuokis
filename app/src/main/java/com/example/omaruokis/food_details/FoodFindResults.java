@@ -23,7 +23,7 @@ public class FoodFindResults extends AppCompatActivity {
         setContentView(R.layout.activity_food_find_results);
 
         Intent intent = getIntent();
-        String findFoodName = intent.getStringExtra(FoodSearch.EXTRA_MESSAGE);
+        String findFoodName = intent.getStringExtra(FoodSearchActivity.EXTRA_MESSAGE);
         Log.d(FoodRoomDatabase.TAG, "onCreate: " + findFoodName);
 
         mFoodViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);

@@ -22,7 +22,7 @@ import com.project.omaruokis.R;
 
 import java.util.List;
 
-public class FoodSearch extends AppCompatActivity {
+public class FoodSearchActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "com.example.omaruokis.food_details.MESSAGE";
     private FoodListAdapter adapter;
