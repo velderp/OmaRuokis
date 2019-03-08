@@ -33,4 +33,11 @@
     <string name="main_revert_button_description">Revert icon</string>
     <string name="title_activity_food_search">FoodSearch</string>
     <string name="results">Results:</string>
+    <string name="main_nutrients_header">Päivän saanti</string>
+    <string name="main_nutrients_calories">Kalorit:</string>
+    <string name="main_nutrients_carbs">Hiilihydraatti:</string>
+    <string name="main_nutrients_lipids">Rasva:</string>
+    <string name="main_nutrients_proteins">Proteiini:</string>
+    <string name="unit_grams">g</string>
+    <string name="amount_zero">0</string>
 </resources>

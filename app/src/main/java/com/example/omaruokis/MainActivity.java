@@ -148,12 +148,12 @@ public class MainActivity extends AppCompatActivity {
                 updateUI();
             }
         });
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.activity_level_array_fi));
         Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
         spinner.setAdapter(adapter);
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

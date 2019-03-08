@@ -15,6 +15,17 @@
         android:minHeight="600dp">
 
 
+        <TextView
+            android:id="@+id/textMainNutrients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/main_nutrients_header"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textMainTee" />
+
         <android.support.constraint.Guideline
             android:id="@+id/guideline2"
             android:layout_width="wrap_content"
@@ -130,6 +141,50 @@
             app:layout_constraintTop_toBottomOf="@+id/textMainBmi" />
 
         <TextView
+            android:id="@+id/textMainCalories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/main_nutrients_calories"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textMainNutrients" />
+
+        <TextView
+            android:id="@+id/textMainCarbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/main_nutrients_carbs"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textMainCalories" />
+
+        <TextView
+            android:id="@+id/textMainLipids"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/main_nutrients_lipids"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textMainCarbs" />
+
+        <TextView
+            android:id="@+id/textMainProteins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/main_nutrients_proteins"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textMainLipids" />
+
+        <TextView
             android:id="@+id/textMainCalcTee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -155,11 +210,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:text="@string/main_meals_header"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textMainTee" />
+            app:layout_constraintTop_toBottomOf="@+id/textMainProteins" />
 
         <ImageButton
             android:id="@+id/mainCalendarButton"
@@ -181,6 +236,90 @@
             app:layout_constraintStart_toEndOf="@+id/mainCalendarButton"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_revert" />
+
+        <TextView
+            android:id="@+id/textMainSumCalories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/amount_zero"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/textMainNutrients" />
+
+        <TextView
+            android:id="@+id/textMainUnitCalories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/unit_energy"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/textMainSumCalories"
+            app:layout_constraintTop_toBottomOf="@+id/textMainNutrients" />
+
+        <TextView
+            android:id="@+id/textMainUnitCarbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/unit_grams"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/textMainSumCarbs"
+            app:layout_constraintTop_toBottomOf="@+id/textMainUnitCalories" />
+
+        <TextView
+            android:id="@+id/textMainUnitLipids"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/unit_grams"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/textMainSumLipids"
+            app:layout_constraintTop_toBottomOf="@+id/textMainUnitCarbs" />
+
+        <TextView
+            android:id="@+id/textMainUnitProteins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/unit_grams"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/textMainSumProteins"
+            app:layout_constraintTop_toBottomOf="@+id/textMainUnitLipids" />
+
+        <TextView
+            android:id="@+id/textMainSumCarbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/amount_zero"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/textMainSumCalories" />
+
+        <TextView
+            android:id="@+id/textMainSumLipids"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/amount_zero"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/textMainSumCarbs" />
+
+        <TextView
+            android:id="@+id/textMainSumProteins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/amount_zero"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/textMainSumLipids" />
 
     </android.support.constraint.ConstraintLayout>
     </ScrollView>
