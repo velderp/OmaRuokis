@@ -29,7 +29,8 @@
     <string name="find">Hae</string>
     <string name="favorites">Suosikit:</string>
     <string name="action_info">Tietoja sovelluksesta</string>
-    <string name="main_button_descriptio">Calendar icon</string>
+    <string name="main_calendar_button_description">Calendar icon</string>
+    <string name="main_revert_button_description">Revert icon</string>
     <string name="title_activity_food_search">FoodSearch</string>
     <string name="results">Results:</string>
 </resources>

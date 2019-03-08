@@ -9,12 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.omaruokis.food_details.FoodDetails;
 import com.example.omaruokis.food_details.FoodSearchActivity;
 import com.project.omaruokis.R;
 import com.example.omaruokis.utilities.BodyCalc;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setDate();
+        setListeners();
+        setDatePicker();
         // Check for saved user info. If InfoFilled is not set as true, UserInfoActivity is started.
         UserPrefs prefs = new UserPrefs(this);
         if (!prefs.prefGetInfoFilled()) {
@@ -48,25 +52,12 @@ public class MainActivity extends AppCompatActivity {
             Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
             spinner.setSelection(prefs.prefGetUserPal());
         }
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, FoodSearchActivity.class));
-            }
-        });
-
-        selectDate();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        UserPrefs prefs = new UserPrefs(this);
-        if (prefs.prefGetInfoFilled()) {
-            updateUI();
-        }
+        updateUI();
     }
 
     @Override
@@ -97,8 +88,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        setDate();
-        bodyCalc();
+        UserPrefs prefs = new UserPrefs(this);
+        if (prefs.prefGetInfoFilled()) {
+            setDate();
+            bodyCalc();
+        }
+
     }
 
     private void bodyCalc() {
@@ -109,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
             int weight = Integer.parseInt(et.getText().toString());
             int height = prefs.prefGetUserHeight();
             String sex = prefs.prefGetUserSex();
-            double pal = 1 + prefs.prefGetUserPal() * 0.3;
+            Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
+            double pal = 1 + spinner.getSelectedItemPosition() * 0.3;
             String dob = prefs.prefGetUserDob();
             TextView tv = findViewById(R.id.textMainDate);
             String date = tv.getText().toString();
@@ -121,8 +117,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void selectDate() {
-        Calendar newCalendar = Calendar.getInstance();
+    private void setDatePicker() {
+        Calendar calendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
 
@@ -133,19 +129,48 @@ public class MainActivity extends AppCompatActivity {
                 updateUI();
             }
 
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),
-                newCalendar.get(Calendar.DAY_OF_MONTH));
+        },calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
     }
 
-    public void onCalendarClick(View view) {
-        if (view == findViewById(R.id.mainCalendarButton)) {
-            datePickerDialog.show();
-        }
-    }
+    private void setListeners() {
+        findViewById(R.id.mainCalendarButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datePickerDialog.show();
+            }
+        });
 
-    public void onDateClick(View view) {
-        DateHolder.getInstance().resetDate();
-        updateUI();
+        findViewById(R.id.mainCurrentDateButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DateHolder.getInstance().resetDate();
+                updateUI();
+            }
+        });
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.activity_level_array_fi));
+        Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                updateUI();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, FoodSearchActivity.class));
+            }
+        });
     }
 
     private void setDate() {

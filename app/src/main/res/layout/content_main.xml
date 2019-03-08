@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:onClick="onDateClick"
             android:text="@string/empty_hint"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -167,11 +166,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:contentDescription="@string/main_button_descriptio"
-            android:onClick="onCalendarClick"
+            android:contentDescription="@string/main_calendar_button_description"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_today" />
+
+        <ImageButton
+            android:id="@+id/mainCurrentDateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:contentDescription="@string/main_revert_button_description"
+            app:layout_constraintStart_toEndOf="@+id/mainCalendarButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_revert" />
 
     </android.support.constraint.ConstraintLayout>
     </ScrollView>
