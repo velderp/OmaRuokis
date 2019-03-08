@@ -29,6 +29,7 @@ public class FoodRepository {
         mFoodDao = db.wordDao();
 
         favoritess = mFoodDao.getAllFavorites();
+
     }
 
 
@@ -46,6 +47,10 @@ public class FoodRepository {
 
     LiveData<List<FoodDetails>> findFoodDetails(int foodId){
         return mFoodDao.findFoodDetails(foodId);
+    }
+
+    LiveData<List<FoodNameFi>> getFavorites(){
+        return mFoodDao.getFavorites();
     }
 
 

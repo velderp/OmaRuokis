@@ -41,6 +41,10 @@ public class FoodViewModel extends AndroidViewModel {
         return mRepository.findFoodDetails(foodId);
     }
 
+    LiveData<List<FoodNameFi>> getFavorites(){
+        return mRepository.getFavorites();
+    }
+
 
 
 }
