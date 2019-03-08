@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="info_header">Tietoa sovelluksesta</string>
+    <string name="info_content">
+        Oma ruokapäiväkirjasta voit etsiä ruokien sisältöjä
+        painamalla etuikkunsassa kuvaruudun oikeasta alakulmasta + ikonia
+        jolloin käyttäjä voi syöttää hakuun etsimänsä ruuan.
+        \n
+        \n
+        Haluattessaan käyttäjä voi
+        lisätä ruokia suosikkeisiinsa painamalla ruuan vieressä olevaa tähteä.
+        Käyttäjä voi seurata suosikkeihin lisättyjä ruokia pitämällä haun tyhjänä.
+        \n
+        \n
+        Ohjelman etuikkunasta voit seurata energian tarvetta ja
+        kalenteria kun käyttäjän tiedot ovat syötetty.
+        \n
+        \n
+
+    </string>
+</resources>
