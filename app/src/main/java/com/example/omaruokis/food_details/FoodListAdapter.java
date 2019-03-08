@@ -1,6 +1,5 @@
 package com.example.omaruokis.food_details;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -19,23 +18,21 @@ import java.util.List;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordViewHolder> {
 
-    private final LayoutInflater mInflater;
-    private List<FoodNameFi> foodNameFis; // Cached copy of foodNames
-    private FoodRepository mRepository;
+    private final LayoutInflater inflater;
+    private List<FoodNameFi> foodNameFis; // Cached copy of foodNames are search result or matching FOODIDs from favorites
     private FoodRoomDatabase db;
-    private List<Favorite> favorites;
-    private List<Integer> favoritesFoodIds;
+    private List<Favorite> favorites; // Cached copy of favorites that are in favorite table
+    private List<Integer> favoritesFoodIds; // Cached copy of FOODIDs that are in favorite table
 
     FoodListAdapter(Context context) {
-        FoodRepository repository = new FoodRepository((Application) context.getApplicationContext());
-        mInflater = LayoutInflater.from(context);
-        db = FoodRoomDatabase.getDatabase(context);
+        inflater = LayoutInflater.from(context);
+        db = FoodRoomDatabase.getDatabase(context); //Room database
         favoritesFoodIds = new ArrayList<>();
     }
 
     @Override
     public WordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View itemView = inflater.inflate(R.layout.recyclerview_item, parent, false);
         return new WordViewHolder(itemView, this);
     }
 
@@ -85,13 +82,15 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
     class WordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView wordItemView;
         private final ImageView imageView;
-        final FoodListAdapter mAdapter;
+        final FoodListAdapter adapter;
 
         private WordViewHolder(View itemView, FoodListAdapter adapter) {
             super(itemView);
+            //food name
             wordItemView = itemView.findViewById(R.id.textViewEufName);
+            //favorite star
             imageView = itemView.findViewById(R.id.imageView);
-            this.mAdapter = adapter;
+            this.adapter = adapter;
             wordItemView.setOnClickListener(this);
             imageView.setOnClickListener(this);
         }
@@ -99,25 +98,13 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
         @Override
         public void onClick(View v) {
             if(v == wordItemView) {
+                //Pass foodName object to FoodDetailsActivity and start it.
                 Log.d(FoodRoomDatabase.TAG, "onClick: " + v.toString());
                 Intent intent = new Intent(v.getContext(), FoodDetailsActivity.class);
-                //intent.putExtra(FoodSearch.EXTRA_MESSAGE, foodNameFis.get(getLayoutPosition()).getFoodId());
                 intent.putExtra(FoodSearch.EXTRA_MESSAGE, foodNameFis.get(getLayoutPosition()));
                 v.getContext().startActivity(intent);
-
-                /*int mPosition = getLayoutPosition();
-                FoodNameFi element = foodNameFis.get(mPosition);
-                //element.set("Clicked " + element.getWord());
-                mAdapter.notifyDataSetChanged();*/
             }else if(v == imageView){
-                /*if(imageView.getImageAlpha() == 50){
-                    mWords.get(getLayoutPosition()).setmWord(mWords.get(getLayoutPosition()).getWord() + ".");
-                    //mAdapter.notifyItemChanged(getLayoutPosition());
-                }else{
-                    //mAdapter.notifyItemChanged(getLayoutPosition());
-                }
-                //FoodRoomDatabase db = FoodRoomDatabase.getDatabase(v.getContext());
-                //db.wordDao().insert(new Favorite(getLayoutPosition()));*/
+                //add taped object FOODID to favorite table if it is not there else remove it from there
                 new insertAsyncTask(db.wordDao()).execute(new Favorite(foodNameFis.get(getLayoutPosition()).getFoodId()));
             }
         }
@@ -125,6 +112,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
 
 
     }
+        //async for sql
         private static class insertAsyncTask extends AsyncTask<Favorite, Void, Void> {
 
             private FoodDao mAsyncTaskDao;

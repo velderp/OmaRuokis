@@ -50,7 +50,7 @@ public class FoodDetailsActivity extends AppCompatActivity {
         foodViewModel.findFoodDetails(foodName.getFoodId()).observe(this, new Observer<List<FoodDetails>>() {
             @Override
             public void onChanged(@Nullable List<FoodDetails> foodDetails) {
-                Toast.makeText(FoodDetailsActivity.this, "" + foodDetails.size(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FoodDetailsActivity.this, "" + foodDetails.size(), Toast.LENGTH_SHORT).show();
                 foodDetailsListAdapter.setFoodDetails(foodDetails);
             }
         });

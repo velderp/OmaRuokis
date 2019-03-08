@@ -50,7 +50,7 @@ public abstract class FoodRoomDatabase extends RoomDatabase {
             Log.d(TAG, "onOpen: room database open");
         }
     };
-
+/*
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void>{
 
         private final FoodDao mDao;
@@ -66,5 +66,5 @@ public abstract class FoodRoomDatabase extends RoomDatabase {
             return null;
         }
 
-    }
+    }*/
 }
