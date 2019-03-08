@@ -30,10 +30,12 @@ public interface FoodDao {
     @Query("SELECT * FROM component_value WHERE FOODID == :foodId")
     LiveData<List<ComponentValue>> getFoodIdComponetValues(int foodId);
 
-    @Query( "select eufdname_FI.DESCRIPT, component_value.BESTLOC from component_value " +
+    @Query("select eufdname_FI.DESCRIPT, component_value.BESTLOC from component_value " +
             "inner join eufdname_FI on component_value.EUFDNAME = eufdname_FI.THSCODE " +
             "where component_value.FOODID = :foodId")
     LiveData<List<FoodDetails>> findFoodDetails(int foodId);
 
+    @Query("SELECT * FROM foodname_FI INNER JOIN favorite on foodname_FI.FOODID = favorite.FOODID")
+    LiveData<List<FoodNameFi>> getFavorites();
 
 }

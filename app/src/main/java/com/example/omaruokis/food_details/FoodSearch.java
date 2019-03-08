@@ -46,12 +46,12 @@ public class FoodSearch extends AppCompatActivity {
 
         mFoodViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
         listLiveDataFoodNameFi = mFoodViewModel.findFoodByName("peruna");
-        mFoodViewModel.findFoodByName("peruna").observe(this, new Observer<List<FoodNameFi>>() {
+        mFoodViewModel.getFavorites().observe(this, new Observer<List<FoodNameFi>>() {
             @Override
             public void onChanged(@Nullable final List<FoodNameFi> foodNameFis) {
                 //update the cached copy of the foods in the adapter.
                 TextView textView = findViewById(R.id.textView3);
-                //textView.setText("Favorites: " + foodNameFis.size());
+                textView.setText("Favorites: " + foodNameFis.size());
                 adapter.setFoods(foodNameFis);
                 Log.d(FoodRoomDatabase.TAG, "onChanged: Observer Food");
             }

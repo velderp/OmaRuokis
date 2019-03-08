@@ -49,7 +49,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
             holder.wordItemView.setText("No Food");
         }
 
-        if(favoritesFoodIds.contains(Integer.valueOf(position))){
+        if(favoritesFoodIds.contains(foodNameFis.get(position).getFoodId())){
             holder.imageView.setImageAlpha(255);
         }else{
             holder.imageView.setImageAlpha(50);
@@ -73,7 +73,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
 
 
     // getItemCount() is called many times, and when it is first called,
-    // mWords has not been updated (means initially, it's null, and we can't return null).
+    // foodNamesFis has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
         if (foodNameFis != null)
@@ -108,20 +108,19 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
                 /*int mPosition = getLayoutPosition();
                 FoodNameFi element = foodNameFis.get(mPosition);
                 //element.set("Clicked " + element.getWord());
-                mAdapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();*/
             }else if(v == imageView){
-                if(imageView.getImageAlpha() == 50){
+                /*if(imageView.getImageAlpha() == 50){
                     mWords.get(getLayoutPosition()).setmWord(mWords.get(getLayoutPosition()).getWord() + ".");
                     //mAdapter.notifyItemChanged(getLayoutPosition());
                 }else{
                     //mAdapter.notifyItemChanged(getLayoutPosition());
                 }
                 //FoodRoomDatabase db = FoodRoomDatabase.getDatabase(v.getContext());
-                //db.wordDao().insert(new Favorite(getLayoutPosition()));
-                new insertAsyncTask(db.wordDao()).execute(new Favorite(getLayoutPosition()));
+                //db.wordDao().insert(new Favorite(getLayoutPosition()));*/
+                new insertAsyncTask(db.wordDao()).execute(new Favorite(foodNameFis.get(getLayoutPosition()).getFoodId()));
             }
-            imageView.setImageAlpha(255);*/
-        }}
+        }
 
 
 
