@@ -22,9 +22,7 @@
     <string name="main_info_energy_consump">Energiankulutus (arv.):</string>
     <string name="unit_energy">kcal</string>
     <string name="main_meals_header">Ateriat</string>
-    <string name="hint_word">Word…</string>
-    <string name="button_save">Save</string>
-    <string name="empty_not_saved">Word not saved because it is empty.</string>
-    <string name="title_activity_food_details">FoodDetails</string>
-    <string name="search">Search</string>
+    <string name="hint_word">Hakusana</string>
+    <string name="title_activity_food_details">Ruoan tiedot</string>
+    <string name="search">Haku</string>
 </resources>
