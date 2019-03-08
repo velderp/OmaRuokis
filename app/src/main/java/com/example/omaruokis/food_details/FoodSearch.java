@@ -51,7 +51,7 @@ public class FoodSearch extends AppCompatActivity {
             public void onChanged(@Nullable final List<FoodNameFi> foodNameFis) {
                 //update the cached copy of the foods in the adapter.
                 TextView textView = findViewById(R.id.textView3);
-                textView.setText(R.string.favorites + foodNameFis.size());
+                textView.setText(getString(R.string.favorites) + " " + foodNameFis.size());
                 adapter.setFoods(foodNameFis);
                 Log.d(FoodRoomDatabase.TAG, "onChanged: Observer Food");
             }
@@ -76,7 +76,7 @@ public class FoodSearch extends AppCompatActivity {
             public void onChanged(@Nullable List<FoodNameFi> foodNameFis) {
                 TextView textView = findViewById(R.id.textView3);
                 int i = foodNameFis.size();
-                textView.setText(getString(R.string.results) + i);
+                textView.setText(getString(R.string.results) + " " + i);
                 adapter.setFoods(foodNameFis);
             }
         });
