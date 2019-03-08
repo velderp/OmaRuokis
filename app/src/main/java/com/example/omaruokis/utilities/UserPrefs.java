@@ -15,8 +15,8 @@ public class UserPrefs {
     private static final int MAX_HEIGHT = 272;
     public static final int MIN_WEIGHT = 1;
     public static final int MAX_WEIGHT = 635;
-    public static final int MIN_YEAR = 1900;
-    public static final int MAX_YEAR = 2100;
+    public static final int MIN_YEAR = 1903;
+    public static final int MAX_YEAR = 2200;
     private Context context;
 
     public UserPrefs(Context context) {

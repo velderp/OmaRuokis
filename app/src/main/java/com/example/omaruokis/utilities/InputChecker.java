@@ -7,13 +7,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class InputChecker {
-    static final String DATE_FORMAT = "d.M.yyyy";
+    private static final String DATE_FORMAT = "d.M.yyyy";
+    private static final DateFormat df = new SimpleDateFormat(DATE_FORMAT);
 
     public InputChecker() {
     }
 
     boolean checkDateValidity(String date, int minYear, int maxYear) {
-        DateFormat df = new SimpleDateFormat(DATE_FORMAT);
         df.setLenient(false);
         try {
             df.parse(date);
@@ -26,7 +26,6 @@ public class InputChecker {
     }
 
     boolean dateBeforeCurrent(String input) {
-        DateFormat df = new SimpleDateFormat(DATE_FORMAT);
         df.setLenient(false);
         Date date;
         Date current = Calendar.getInstance().getTime();
@@ -40,13 +39,16 @@ public class InputChecker {
     }
 
     String formatDate(String input) {
-        DateFormat df = new SimpleDateFormat(DATE_FORMAT);
         Date date;
         try {
             date = df.parse(input);
         } catch (ParseException e) {
             return "00.00.0000";
         }
+        return df.format(date);
+    }
+
+    String formatDate(Date date) {
         return df.format(date);
     }
 

@@ -26,7 +26,6 @@ public class UserInfoActivity extends AppCompatActivity {
 
     public void checkAndSave(View view) {
         UserPrefs userPrefs = new UserPrefs(this);
-        InputChecker checker = new InputChecker();
         String date = ((EditText) findViewById(R.id.editDob)).getText().toString();
         String weight = ((EditText) findViewById(R.id.editWeight)).getText().toString();
         String height = ((EditText) findViewById(R.id.editHeight)).getText().toString();

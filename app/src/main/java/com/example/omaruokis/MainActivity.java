@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.omaruokis.food_details.FoodDetails;
 import com.example.omaruokis.food_details.FoodSearchActivity;
 import com.project.omaruokis.R;
 import com.example.omaruokis.utilities.BodyCalc;

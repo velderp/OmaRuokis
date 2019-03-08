@@ -1,7 +1,5 @@
 package com.example.omaruokis.utilities;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -18,10 +16,6 @@ public class DateHolder {
         this.date = Calendar.getInstance().getTime();
     }
 
-    public Date getDate() {
-        return date;
-    }
-
     public void setDate(Date date) {
         this.date = date;
     }
@@ -31,7 +25,7 @@ public class DateHolder {
     }
 
     public String dateToString () {
-        DateFormat df = new SimpleDateFormat(InputChecker.DATE_FORMAT);
-        return df.format(this.date);
+        InputChecker checker = new InputChecker();
+        return checker.formatDate(this.date);
     }
 }
