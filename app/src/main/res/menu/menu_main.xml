@@ -3,11 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.project.omaruokis.com.example.omaruokis.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_user_info"
         android:orderInCategory="99"
         android:title="@string/user_info_header"
@@ -15,4 +10,9 @@
     <item
         android:id="@+id/action_search"
         android:title="@string/search" />
+    <item
+        android:id="@+id/action_info"
+        android:orderInCategory="101"
+        android:title="@string/action_info"
+        app:showAsAction="never" />
 </menu>

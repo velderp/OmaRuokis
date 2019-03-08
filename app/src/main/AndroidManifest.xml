@@ -22,6 +22,9 @@
         <activity android:name="com.example.omaruokis.UserInfoActivity"
             android:parentActivityName="com.example.omaruokis.MainActivity" >
         </activity>
+        <activity android:name="com.example.omaruokis.InfoActivity"
+            android:parentActivityName="com.example.omaruokis.MainActivity" >
+        </activity>
         <activity
             android:name="com.example.omaruokis.food_details.FoodDetailsActivity"
             android:label="@string/title_activity_food_details"

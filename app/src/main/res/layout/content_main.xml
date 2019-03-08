@@ -56,7 +56,8 @@
             android:inputType="number"
             app:layout_constraintEnd_toStartOf="@+id/textView3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textMainDate" />
+            app:layout_constraintTop_toBottomOf="@+id/textMainDate"
+            android:importantForAutofill="no" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline4"
@@ -159,5 +160,17 @@
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMainTee" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:contentDescription="@string/main_button_descriptio"
+            app:layout_constraintStart_toEndOf="@+id/textMainDate"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_today" />
+
     </android.support.constraint.ConstraintLayout>
     </ScrollView>

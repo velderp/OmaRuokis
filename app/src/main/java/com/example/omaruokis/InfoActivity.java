@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.project.omaruokis.R;
 
-public class Info extends AppCompatActivity {
+public class InfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
