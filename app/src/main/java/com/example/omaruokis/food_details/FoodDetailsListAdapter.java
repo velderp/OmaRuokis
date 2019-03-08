@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.project.omaruokis.R;
 
 import java.util.List;
+import java.util.Locale;
 
 public class FoodDetailsListAdapter extends RecyclerView.Adapter<FoodDetailsListAdapter.FoodDetailsHolder> {
     private final LayoutInflater inflater;
@@ -38,14 +39,17 @@ public class FoodDetailsListAdapter extends RecyclerView.Adapter<FoodDetailsList
         if(foodDetails != null){
             FoodDetails current = foodDetails.get(i);
             foodDetailsHolder.textViewdesscript.setText(current.getDescript());
-            foodDetailsHolder.textViewbestloc.setText(current.getBestloc());
+            //use ',' instead of '.' as decimal separator
+            foodDetailsHolder.textViewbestloc.setText(Double.toString(current.getBestloc()).replace('.',','));
         }else{
+            //when foodDetails is not yet initialized
             foodDetailsHolder.textViewbestloc.setText("No value");
             foodDetailsHolder.textViewdesscript.setText("No descriptor");
         }
 
     }
 
+    //if foodDetails is not yet set return 0 as number of list elements
     @Override
     public int getItemCount() {
         if(foodDetails != null) {

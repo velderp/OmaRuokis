@@ -32,7 +32,7 @@
         <activity android:name="com.example.omaruokis.food_details.FoodFindResults" />
         <activity
             android:name="com.example.omaruokis.food_details.FoodSearch"
-            android:label="FoodSearch"
+            android:label="@string/title_activity_food_search"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,9 +8,9 @@ public class FoodDetails {
     @ColumnInfo(name = "DESCRIPT")
     private String descript;
     @ColumnInfo(name = "BESTLOC")
-    private String bestloc;
+    private Double bestloc;
 
-    public FoodDetails(String descript, String bestloc) {
+    public FoodDetails(String descript, Double bestloc) {
         this.descript = descript;
         this.bestloc = bestloc;
     }
@@ -19,7 +19,7 @@ public class FoodDetails {
         this.descript = descript;
     }
 
-    public void setBestloc(String bestloc) {
+    public void setBestloc(Double bestloc) {
         this.bestloc = bestloc;
     }
 
@@ -27,7 +27,7 @@ public class FoodDetails {
         return descript;
     }
 
-    public String getBestloc() {
+    public Double getBestloc() {
         return bestloc;
     }
 }
