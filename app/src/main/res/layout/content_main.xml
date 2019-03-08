@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:onClick="onDateClick"
             android:text="@string/empty_hint"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -162,13 +163,13 @@
             app:layout_constraintTop_toBottomOf="@+id/textMainTee" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/mainCalendarButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:contentDescription="@string/main_button_descriptio"
-            app:layout_constraintStart_toEndOf="@+id/textMainDate"
+            android:onClick="onCalendarClick"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_today" />
 

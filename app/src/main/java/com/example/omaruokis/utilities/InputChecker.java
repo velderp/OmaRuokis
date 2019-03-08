@@ -1,4 +1,4 @@
-package com.example.omaruokis;
+package com.example.omaruokis.utilities;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -6,10 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-class InputChecker {
+public class InputChecker {
     static final String DATE_FORMAT = "d.M.yyyy";
 
-    InputChecker() {
+    public InputChecker() {
     }
 
     boolean checkDateValidity(String date, int minYear, int maxYear) {
@@ -50,7 +50,7 @@ class InputChecker {
         return df.format(date);
     }
 
-    boolean checkInt(String input, int min, int max) {
+    public boolean checkInt(String input, int min, int max) {
         int inputInt;
         try {
             inputInt = Integer.parseInt(input);

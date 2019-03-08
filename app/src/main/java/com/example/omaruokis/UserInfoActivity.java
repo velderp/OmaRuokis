@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import com.example.omaruokis.utilities.InputChecker;
+import com.example.omaruokis.utilities.UserPrefs;
 import com.project.omaruokis.R;
 
 public class UserInfoActivity extends AppCompatActivity {

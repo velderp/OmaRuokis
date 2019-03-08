@@ -1,28 +1,32 @@
 package com.example.omaruokis;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.omaruokis.food_details.FoodSearchActivity;
 import com.project.omaruokis.R;
+import com.example.omaruokis.utilities.BodyCalc;
+import com.example.omaruokis.utilities.DateHolder;
+import com.example.omaruokis.utilities.InputChecker;
+import com.example.omaruokis.utilities.UserPrefs;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String LOCALE = "fi-FI";
+    private DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             EditText et = findViewById(R.id.editMainWeight);
-            et.setText(Integer.toString(prefs.prefGetUserWeight()));
+            et.setText(String.format(Locale.forLanguageTag(LOCALE), "%d",
+                    prefs.prefGetUserWeight()));
             Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
             spinner.setSelection(prefs.prefGetUserPal());
         }
@@ -47,10 +52,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, FoodSearchActivity.class));
             }
         });
+
+        selectDate();
     }
 
     @Override
@@ -80,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_user_info) {
             startActivity(new Intent(this, UserInfoActivity.class));
             return true;
-        } else if (id == R.id.action_search){
-            startActivity(new Intent(this, FoodSearchActivity.class));
         }
         if (id == R.id.action_info) {
             startActivity(new Intent(this, InfoActivity.class));
@@ -92,10 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        DateFormat df = new SimpleDateFormat(InputChecker.DATE_FORMAT);
-        Date date = Calendar.getInstance().getTime();
-        TextView tv = findViewById(R.id.textMainDate);
-        tv.setText(df.format(date));
+        setDate();
         bodyCalc();
     }
 
@@ -113,11 +114,41 @@ public class MainActivity extends AppCompatActivity {
             String date = tv.getText().toString();
             BodyCalc calc = new BodyCalc(weight, height, sex, pal, dob, date);
             tv = findViewById(R.id.textMainCalcBmi);
-            tv.setText(String.format(Locale.forLanguageTag("fi-FI"), "%.2f", calc.calcBmi()));
+            tv.setText(String.format(Locale.forLanguageTag(LOCALE), "%.2f", calc.calcBmi()));
             tv = findViewById(R.id.textMainCalcTee);
-            tv.setText(String.format(Locale.forLanguageTag("fi-FI"), "%d", calc.calcTee()));
+            tv.setText(String.format(Locale.forLanguageTag(LOCALE), "%d", calc.calcTee()));
         }
+    }
 
+    private void selectDate() {
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
 
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                DateHolder.getInstance().setDate(newDate.getTime());
+                updateUI();
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),
+                newCalendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    public void onCalendarClick(View view) {
+        if (view == findViewById(R.id.mainCalendarButton)) {
+            datePickerDialog.show();
+        }
+    }
+
+    public void onDateClick(View view) {
+        DateHolder.getInstance().resetDate();
+        updateUI();
+    }
+
+    private void setDate() {
+        TextView tv = findViewById(R.id.textMainDate);
+        tv.setText(DateHolder.getInstance().dateToString());
     }
 }

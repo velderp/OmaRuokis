@@ -1,9 +1,9 @@
-package com.example.omaruokis;
+package com.example.omaruokis.utilities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-class UserPrefs {
+public class UserPrefs {
     private static final String PREF_USER = "UserInfo";
     private static final String USER_DOB = "DateOfBirth";
     private static final String USER_SEX = "Sex";
@@ -13,13 +13,13 @@ class UserPrefs {
     private static final String USER_INFO_FILLED = "InfoFilled";
     private static final int MIN_HEIGHT = 24;
     private static final int MAX_HEIGHT = 272;
-    static final int MIN_WEIGHT = 1;
-    static final int MAX_WEIGHT = 635;
-    static final int MIN_YEAR = 1900;
-    static final int MAX_YEAR = 2100;
+    public static final int MIN_WEIGHT = 1;
+    public static final int MAX_WEIGHT = 635;
+    public static final int MIN_YEAR = 1900;
+    public static final int MAX_YEAR = 2100;
     private Context context;
 
-    UserPrefs(Context context) {
+    public UserPrefs(Context context) {
         this.context = context;
     }
 
@@ -35,11 +35,11 @@ class UserPrefs {
         return new InputChecker();
     }
 
-    String prefGetUserDob() {
+    public String prefGetUserDob() {
         return prefGet().getString(USER_DOB, "");
     }
 
-    boolean prefSetUserDob(String dateOfBirth) {
+    public boolean prefSetUserDob(String dateOfBirth) {
         if (checker().checkDateValidity(dateOfBirth, MIN_YEAR, MAX_YEAR)
                 && checker().dateBeforeCurrent(dateOfBirth)) {
             prefEdit().putString(USER_DOB, checker().formatDate(dateOfBirth)).apply();
@@ -48,19 +48,19 @@ class UserPrefs {
         return false;
     }
 
-    String prefGetUserSex() {
+    public String prefGetUserSex() {
         return prefGet().getString(USER_SEX, "M");
     }
 
-    void prefSetUserSex(String sex) {
+    public void prefSetUserSex(String sex) {
         prefEdit().putString(USER_SEX, sex).apply();
     }
 
-    int prefGetUserWeight() {
+    public int prefGetUserWeight() {
         return prefGet().getInt(USER_WEIGHT, -1);
     }
 
-    boolean prefSetUserWeight(String weight) {
+    public boolean prefSetUserWeight(String weight) {
         if (checker().checkInt(weight, MIN_WEIGHT, MAX_WEIGHT)) {
             prefEdit().putInt(USER_WEIGHT, Integer.parseInt(weight)).apply();
             return true;
@@ -68,11 +68,11 @@ class UserPrefs {
         return false;
     }
 
-    int prefGetUserHeight() {
+    public int prefGetUserHeight() {
         return prefGet().getInt(USER_HEIGHT, -1);
     }
 
-    boolean prefSetUserHeight(String height) {
+    public boolean prefSetUserHeight(String height) {
         if (checker().checkInt(height, MIN_HEIGHT, MAX_HEIGHT)) {
             prefEdit().putInt(USER_HEIGHT, Integer.parseInt(height)).apply();
             return true;
@@ -80,19 +80,19 @@ class UserPrefs {
         return false;
     }
 
-    int prefGetUserPal() {
+    public int prefGetUserPal() {
         return prefGet().getInt(USER_PAL, 0);
     }
 
-    void prefSetUserPal(int activityLevel) {
+    public void prefSetUserPal(int activityLevel) {
         prefEdit().putInt(USER_PAL, activityLevel).apply();
     }
 
-    boolean prefGetInfoFilled() {
+    public boolean prefGetInfoFilled() {
         return prefGet().getBoolean(USER_INFO_FILLED, false);
     }
 
-    void prefSetInfoFilled(boolean infoFilled) {
+    public void prefSetInfoFilled(boolean infoFilled) {
         prefEdit().putBoolean(USER_INFO_FILLED, infoFilled).apply();
     }
 }

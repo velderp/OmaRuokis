@@ -21,7 +21,7 @@
     <string name="main_info_bmi">Painoindeksi:</string>
     <string name="main_info_energy_consump">Energiankulutus (arv.):</string>
     <string name="unit_energy">kcal</string>
-    <string name="main_meals_header">Ateriat</string>
+    <string name="main_meals_header">Syödyt ruoat</string>
     <string name="hint_word">Hakusana</string>
     <string name="title_activity_food_details">Ruoan tiedot</string>
     <string name="search">Haku</string>
