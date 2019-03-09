@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -32,6 +31,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOCALE = "fi-FI";
+    private static final double PAL_INCREMENTS = 0.3;
+    private static final double PAL_MINIMUM = 1.0;
     private DatePickerDialog datePickerDialog;
 
     @Override
@@ -53,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
             EditText et = findViewById(R.id.editMainWeight);
             et.setText(String.format(Locale.forLanguageTag(LOCALE), "%d",
                     prefs.prefGetUserWeight()));
-            Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
-            spinner.setSelection(prefs.prefGetUserPal());
         }
     }
 
@@ -94,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI() {
         UserPrefs prefs = new UserPrefs(this);
         if (prefs.prefGetInfoFilled()) {
+            if (selectedDateIsToday()) {
+                findViewById(R.id.mainCurrentDateButton).setVisibility(View.INVISIBLE);
+                getDetailsFromPrefs();
+            } else {
+                findViewById(R.id.mainCurrentDateButton).setVisibility(View.VISIBLE);
+                getDetailsFromDB();
+            }
             setDate();
             bodyCalc();
         }
@@ -109,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             int height = prefs.prefGetUserHeight();
             String sex = prefs.prefGetUserSex();
             Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
-            double pal = 1 + spinner.getSelectedItemPosition() * 0.3;
+            double pal = spinner.getSelectedItemPosition() * PAL_INCREMENTS + PAL_MINIMUM;
             String dob = prefs.prefGetUserDob();
             TextView tv = findViewById(R.id.textMainDate);
             String date = tv.getText().toString();
@@ -118,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
             tv.setText(String.format(Locale.forLanguageTag(LOCALE), "%.2f", calc.calcBmi()));
             tv = findViewById(R.id.textMainCalcTee);
             tv.setText(String.format(Locale.forLanguageTag(LOCALE), "%d", calc.calcTee()));
+        } else {
+            errorMessage(getString(R.string.main_weight_error));
         }
     }
 
@@ -204,11 +212,11 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.textMainDate);
         String date = DateHolder.getInstance().dateToString();
         tv.setText(date);
-        if (date.equals(DateHolder.getInstance().currentDateToString())) {
-            findViewById(R.id.mainCurrentDateButton).setVisibility(View.INVISIBLE);
-        } else {
-            findViewById(R.id.mainCurrentDateButton).setVisibility(View.VISIBLE);
-        }
+    }
+
+    private boolean selectedDateIsToday() {
+        String date = DateHolder.getInstance().dateToString();
+        return date.equals(DateHolder.getInstance().currentDateToString());
     }
 
     private void errorMessage(String message) {
@@ -231,5 +239,20 @@ public class MainActivity extends AppCompatActivity {
         } else {
             recyclerView.setVisibility(View.GONE);
         }
+    }
+
+    private void getDetailsFromPrefs() {
+        UserPrefs prefs = new UserPrefs(this);
+        EditText et = findViewById(R.id.editMainWeight);
+        et.setText(Integer.toString(prefs.prefGetUserWeight()));
+        Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
+        spinner.setSelection(prefs.prefGetUserPal());
+    }
+
+    private void getDetailsFromDB() {
+        EditText et = findViewById(R.id.editMainWeight);
+        et.setText("100");
+        Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
+        spinner.setSelection(0);
     }
 }
