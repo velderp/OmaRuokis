@@ -50,7 +50,12 @@ public class FoodDetailsListAdapter extends RecyclerView.Adapter<FoodDetailsList
 
     }
 
-    //if foodDetails is not yet set return 0 as number of list elements
+
+    /**
+     * The size of the food list. Used by recyclerview to know how many items are presented.
+     * this gets called many times and at first foodDetails is null.
+     * @return int listan ruokien määrä
+     */
     @Override
     public int getItemCount() {
         if(foodDetails != null) {
@@ -61,6 +66,10 @@ public class FoodDetailsListAdapter extends RecyclerView.Adapter<FoodDetailsList
         }
     }
 
+    /**
+     * FoodDetailsHolder contains View information, textView for food component name and food component quantity,
+     * for displaying one item from item's layout.
+     */
     public class FoodDetailsHolder extends RecyclerView.ViewHolder{
         private final TextView textViewdesscript;
         private final TextView textViewbestloc;
