@@ -6,16 +6,19 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.omaruokis.food_details.FoodSearchActivity;
 import com.project.omaruokis.R;
@@ -94,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             setDate();
             bodyCalc();
         }
-
+        toggleMealsView();
     }
 
     private void bodyCalc() {
@@ -155,6 +158,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.mainToggleMeals).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Show/hide meals
+                updateUI();
+            }
+        });
+
+        findViewById(R.id.mainSaveButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Save meals to database
+                updateUI();
+            }
+        });
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.activity_level_array_fi));
@@ -174,6 +193,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ToggleButton toggleButton = findViewById(R.id.mainToggleMeals);
+                toggleButton.setChecked(true);
                 startActivity(new Intent(MainActivity.this, FoodSearchActivity.class));
             }
         });
@@ -200,5 +221,15 @@ public class MainActivity extends AppCompatActivity {
         InputChecker checker = new InputChecker();
         UserPrefs prefs = new UserPrefs(this);
         return calendar.after(checker.dateStringToCalendar(prefs.prefGetUserDob()));
+    }
+
+    private void toggleMealsView() {
+        ToggleButton toggleButton = findViewById(R.id.mainToggleMeals);
+        RecyclerView recyclerView = findViewById(R.id.mainRecyclerviewMeals);
+        if (toggleButton.isChecked()) {
+            recyclerView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.GONE);
+        }
     }
 }
