@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 
-@Database(entities = {FoodNameFi.class, EufdnameFi.class, ComponentValue.class, Favorite.class, Component.class}, version = 2, exportSchema = false)
+@Database(entities = {FoodNameFi.class, EufdnameFi.class, ComponentValue.class, Favorite.class, Component.class, FoodEaten.class}, version = 2, exportSchema = false)
 public abstract class FoodRoomDatabase extends RoomDatabase {
     public static final String TAG = "myMessage";
     public abstract FoodDao wordDao();

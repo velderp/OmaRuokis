@@ -39,4 +39,10 @@ public interface FoodDao {
     @Query("SELECT * FROM foodname_FI INNER JOIN favorite on foodname_FI.FOODID = favorite.FOODID")
     LiveData<List<FoodNameFi>> getFavorites();
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertFoodEaten(FoodEaten foodEaten);
+
+    @Query("SELECT * FROM food_eaten")
+    LiveData<List<FoodEaten>> getAllFoodEaten();
+
 }

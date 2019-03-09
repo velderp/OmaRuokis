@@ -9,7 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.omaruokis.R;
 
@@ -20,6 +23,7 @@ public class FoodDetailsActivity extends AppCompatActivity {
     private FoodViewModel foodViewModel;
     private TextView textViewDetails;
     private FoodDetailsListAdapter foodDetailsListAdapter;
+    private FoodName foodName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +33,7 @@ public class FoodDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        FoodName foodName = intent.getParcelableExtra(FoodSearchActivity.EXTRA_MESSAGE);
+        foodName = intent.getParcelableExtra(FoodSearchActivity.EXTRA_MESSAGE);
         textViewDetails = findViewById(R.id.textViewFoodId );
         textViewDetails.setText(foodName.getFoodName());
 
@@ -54,6 +58,25 @@ public class FoodDetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void buttonAddDaysFood(View view){
+        final FoodEaten foodEaten = new FoodEaten(foodName.getFoodName(), foodName.getFoodId());
+        foodViewModel.getFoodIdComponetValues(foodName.getFoodId()).observe(this, new Observer<List<ComponentValue>>() {
+            @Override
+            public void onChanged(@Nullable List<ComponentValue> componentValues) {
+                foodEaten.setEnerc(componentValues.get(0).getBestLoc());
+                foodEaten.setChoavl(componentValues.get(1).getBestLoc());
+                foodEaten.setFat(componentValues.get(2).getBestLoc());
+                foodEaten.setProt(componentValues.get(3).getBestLoc());
+
+                foodViewModel.insertFoodEaten(foodEaten);
+
+                Log.d(FoodRoomDatabase.TAG, "onChanged: "+ foodEaten.getFoodName() + " " + foodEaten.getFoodId() + " " + foodEaten.getFat());
+
+
+            }
+        });
     }
 
 }
