@@ -11,9 +11,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +51,19 @@ public class FoodSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_food_search);
         Toolbar toolbar = findViewById(R.id.toolbar);
         EditText editTextFind = findViewById(R.id.editTextFind);
+        //keyboard search button does the same as the layout's find button
+        editTextFind.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                    buttonFind(v);
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        });
+
         setSupportActionBar(toolbar);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);

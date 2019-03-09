@@ -32,8 +32,8 @@
     <string name="action_info">Tietoja sovelluksesta</string>
     <string name="main_calendar_button_description">Calendar icon</string>
     <string name="main_revert_button_description">Revert icon</string>
-    <string name="title_activity_food_search">FoodSearch</string>
-    <string name="results">Results:</string>
+    <string name="title_activity_food_search">Ruoan haku</string>
+    <string name="results">Haku tulokset:</string>
     <string name="main_nutrients_header">Päivän saanti</string>
     <string name="main_nutrients_calories">Kalorit:</string>
     <string name="main_nutrients_carbs">Hiilihydraatti:</string>
