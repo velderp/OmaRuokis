@@ -46,6 +46,10 @@ public class FoodViewModel extends AndroidViewModel {
         return mRepository.getFavorites();
     }
 
+    public void insertFoodEaten(FoodEaten foodEaten){
+        mRepository.insertFoodEaten(foodEaten);
+    }
+
 
 
 }

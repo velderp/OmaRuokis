@@ -2,6 +2,7 @@ package com.example.omaruokis.food_details;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.File;
@@ -51,6 +52,25 @@ public class FoodRepository {
 
     LiveData<List<FoodNameFi>> getFavorites(){
         return mFoodDao.getFavorites();
+    }
+
+    public void insertFoodEaten(FoodEaten foodEaten) {
+        new insertAsyncTask(mFoodDao).execute(foodEaten);
+    }
+
+    private static class insertAsyncTask extends AsyncTask<FoodEaten, Void, Void> {
+
+        private FoodDao mAsyncTaskDao;
+
+        insertAsyncTask(FoodDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final FoodEaten... params) {
+            mAsyncTaskDao.insertFoodEaten(params[0]);
+            return null;
+        }
     }
 
 
