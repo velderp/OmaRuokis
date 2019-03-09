@@ -40,6 +40,7 @@ public class UserInfoActivity extends AppCompatActivity {
             Spinner spinner = findViewById(R.id.spinnerActivityLevel);
             userPrefs.prefSetUserPal(spinner.getSelectedItemPosition());
             userPrefs.prefSetInfoFilled(true);
+            getUserInfo();
             Snackbar.make(view, getString(R.string.user_info_saved), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         } else {

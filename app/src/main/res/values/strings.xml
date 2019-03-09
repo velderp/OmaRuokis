@@ -15,6 +15,7 @@
     <string name="user_info_hint_weight">65</string>
     <string name="user_info_hint_dob">31.1.1995</string>
     <string name="user_info_error">Tarkista tiedot!</string>
+    <string name="main_date_error">Valitsemasi päivä oli ennen syntymääsi!</string>
     <string name="user_info_saved">Tiedot tallennettu.</string>
     <string name="unit_weight">kg</string>
     <string name="unit_height">cm</string>

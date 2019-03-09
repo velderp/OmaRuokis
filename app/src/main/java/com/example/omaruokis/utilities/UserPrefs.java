@@ -38,7 +38,7 @@ public class UserPrefs extends InputChecker {
     public boolean prefSetUserDob(String dateOfBirth) {
         if (checkDateValidity(dateOfBirth, MIN_YEAR, MAX_YEAR)
                 && dateBeforeCurrent(dateOfBirth)) {
-            prefEdit().putString(USER_DOB, formatDate(dateOfBirth)).apply();
+            prefEdit().putString(USER_DOB, formatDateToString(dateOfBirth)).apply();
             return true;
         }
         return false;

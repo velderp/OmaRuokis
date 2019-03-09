@@ -26,11 +26,11 @@ public class DateHolder {
 
     public String dateToString () {
         InputChecker checker = new InputChecker();
-        return checker.formatDate(this.date);
+        return checker.formatDateToString(this.date);
     }
 
     public String currentDateToString () {
         InputChecker checker = new InputChecker();
-        return checker.formatDate(Calendar.getInstance().getTime());
+        return checker.formatDateToString(Calendar.getInstance().getTime());
     }
 }
