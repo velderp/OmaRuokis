@@ -50,6 +50,10 @@ public class FoodViewModel extends AndroidViewModel {
         mRepository.insertFoodEaten(foodEaten);
     }
 
+    public LiveData<List<FoodEaten>> findFoodEatenByDate(String date){
+        return mRepository.findFoodEatenByDate(date);
+    }
+
 
 
 }

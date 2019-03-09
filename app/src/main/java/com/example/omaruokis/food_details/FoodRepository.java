@@ -58,6 +58,10 @@ public class FoodRepository {
         new insertAsyncTask(mFoodDao).execute(foodEaten);
     }
 
+    LiveData<List<FoodEaten>> findFoodEatenByDate(String date){
+        return mFoodDao.findFoodEatenByDate(date);
+    }
+
     private static class insertAsyncTask extends AsyncTask<FoodEaten, Void, Void> {
 
         private FoodDao mAsyncTaskDao;

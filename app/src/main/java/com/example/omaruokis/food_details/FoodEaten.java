@@ -31,7 +31,7 @@ public class FoodEaten {
     public FoodEaten(String foodName, int foodId) {
         this.foodName = foodName;
         this.foodId = foodId;
-        this.date = DateHolder.getInstance().currentDateToString();
+        this.date = DateHolder.getInstance().dateToString();
         this.foodQuantity = 100.0;
     }
 

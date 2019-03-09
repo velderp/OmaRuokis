@@ -1,13 +1,20 @@
 package com.example.omaruokis;
 
 import android.app.DatePickerDialog;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +26,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.example.omaruokis.food_details.FoodEaten;
 import com.example.omaruokis.food_details.FoodSearchActivity;
+import com.example.omaruokis.food_details.FoodViewModel;
 import com.project.omaruokis.R;
 import com.example.omaruokis.utilities.BodyCalc;
 import com.example.omaruokis.utilities.DateHolder;
@@ -27,6 +36,7 @@ import com.example.omaruokis.utilities.InputChecker;
 import com.example.omaruokis.utilities.UserPrefs;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private static final double PAL_INCREMENTS = 0.3;
     private static final double PAL_MINIMUM = 1.0;
     private DatePickerDialog datePickerDialog;
+    private FoodViewModel foodViewModel;
+    private MealsListAdapter mealsListAdapter;
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         setDate();
         setListeners();
@@ -55,6 +69,23 @@ public class MainActivity extends AppCompatActivity {
             et.setText(String.format(Locale.forLanguageTag(LOCALE), "%d",
                     prefs.prefGetUserWeight()));
         }
+
+
+        RecyclerView recyclerView =findViewById(R.id.mainRecyclerviewMeals);
+        mealsListAdapter = new MealsListAdapter(this);
+        recyclerView.setAdapter(mealsListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        foodViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
+        /*String date = DateHolder.getInstance().currentDateToString();
+        LiveData<List<FoodEaten>> listLiveData = foodViewModel.findFoodEatenByDate(date);
+        listLiveData.observe(this, new Observer<List<FoodEaten>>() {
+            @Override
+            public void onChanged(@Nullable List<FoodEaten> foodEatens) {
+                mealsListAdapter.setMeals(foodEatens);
+                Log.d("myMessage2", "onChanged: meals adapter update");
+            }
+        });*/
     }
 
     @Override
@@ -140,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if (isAfterBirth(newDate)) {
                     DateHolder.getInstance().setDate(newDate.getTime());
+
+                    updateAdapter();
+
                     updateUI();
                 } else {
                     errorMessage(getString(R.string.main_date_error));
@@ -254,5 +288,18 @@ public class MainActivity extends AppCompatActivity {
         et.setText("100");
         Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
         spinner.setSelection(0);
+    }
+
+    private void updateAdapter(){
+        String date = DateHolder.getInstance().currentDateToString();
+        LiveData<List<FoodEaten>> listLiveData = foodViewModel.findFoodEatenByDate(date);
+        listLiveData.observe(this, new Observer<List<FoodEaten>>() {
+            @Override
+            public void onChanged(@Nullable List<FoodEaten> foodEatens) {
+                mealsListAdapter.setMeals(foodEatens);
+                Log.d("myMessage2", "onChanged: meals adapter update");
+            }
+        });
+        mealsListAdapter.updateData();
     }
 }

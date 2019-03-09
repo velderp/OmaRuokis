@@ -45,4 +45,9 @@ public interface FoodDao {
     @Query("SELECT * FROM food_eaten")
     LiveData<List<FoodEaten>> getAllFoodEaten();
 
+    @Query("SELECT * FROM food_eaten WHERE DATE LIKE :date")
+    LiveData<List<FoodEaten>> findFoodEatenByDate(String date);
+
+
+
 }
