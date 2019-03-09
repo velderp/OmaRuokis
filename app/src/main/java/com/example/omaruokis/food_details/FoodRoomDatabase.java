@@ -11,13 +11,12 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 
-@Database(entities = {FoodNameFi.class, EufdnameFi.class, ComponentValue.class, Favorite.class}, version = 2, exportSchema = false)
+@Database(entities = {FoodNameFi.class, EufdnameFi.class, ComponentValue.class, Favorite.class, Component.class}, version = 2, exportSchema = false)
 public abstract class FoodRoomDatabase extends RoomDatabase {
     public static final String TAG = "myMessage";
     public abstract FoodDao wordDao();
 
     private static FoodRoomDatabase INSTANCE;
-
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
