@@ -323,13 +323,34 @@
             app:layout_constraintTop_toBottomOf="@+id/textMainSumLipids" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/mainSaveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/button_save"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textMainUnitProteins" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mainRecyclerviewMeals"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textMainMealsHeader"
+            tools:layout_editor_absoluteX="8dp"
+            tools:listitem="@layout/list_meal_edit_item" />
+
+        <ToggleButton
+            android:id="@+id/mainToggleMeals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textOff="@string/main_meals_show"
+            android:textOn="@string/main_meals_hide"
+            app:layout_constraintStart_toEndOf="@+id/textMainMealsHeader"
             app:layout_constraintTop_toBottomOf="@+id/textMainUnitProteins" />
 
     </android.support.constraint.ConstraintLayout>
