@@ -3,7 +3,7 @@ package com.example.omaruokis.utilities;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class UserPrefs {
+public class UserPrefs extends InputChecker {
     private static final String PREF_USER = "UserInfo";
     private static final String USER_DOB = "DateOfBirth";
     private static final String USER_SEX = "Sex";
@@ -31,18 +31,14 @@ public class UserPrefs {
         return prefGet().edit();
     }
 
-    private InputChecker checker() {
-        return new InputChecker();
-    }
-
     public String prefGetUserDob() {
         return prefGet().getString(USER_DOB, "");
     }
 
     public boolean prefSetUserDob(String dateOfBirth) {
-        if (checker().checkDateValidity(dateOfBirth, MIN_YEAR, MAX_YEAR)
-                && checker().dateBeforeCurrent(dateOfBirth)) {
-            prefEdit().putString(USER_DOB, checker().formatDate(dateOfBirth)).apply();
+        if (checkDateValidity(dateOfBirth, MIN_YEAR, MAX_YEAR)
+                && dateBeforeCurrent(dateOfBirth)) {
+            prefEdit().putString(USER_DOB, formatDate(dateOfBirth)).apply();
             return true;
         }
         return false;
@@ -61,7 +57,7 @@ public class UserPrefs {
     }
 
     public boolean prefSetUserWeight(String weight) {
-        if (checker().checkInt(weight, MIN_WEIGHT, MAX_WEIGHT)) {
+        if (checkInt(weight, MIN_WEIGHT, MAX_WEIGHT)) {
             prefEdit().putInt(USER_WEIGHT, Integer.parseInt(weight)).apply();
             return true;
         }
@@ -73,7 +69,7 @@ public class UserPrefs {
     }
 
     public boolean prefSetUserHeight(String height) {
-        if (checker().checkInt(height, MIN_HEIGHT, MAX_HEIGHT)) {
+        if (checkInt(height, MIN_HEIGHT, MAX_HEIGHT)) {
             prefEdit().putInt(USER_HEIGHT, Integer.parseInt(height)).apply();
             return true;
         }
