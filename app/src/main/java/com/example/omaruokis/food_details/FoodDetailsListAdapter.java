@@ -40,7 +40,8 @@ public class FoodDetailsListAdapter extends RecyclerView.Adapter<FoodDetailsList
             FoodDetails current = foodDetails.get(i);
             foodDetailsHolder.textViewdesscript.setText(current.getDescript());
             //use ',' instead of '.' as decimal separator
-            foodDetailsHolder.textViewbestloc.setText(Double.toString(current.getBestloc()).replace('.',','));
+            //sets food component value for display and adds unit to value
+            foodDetailsHolder.textViewbestloc.setText(Double.toString(current.getBestloc()).replace('.',',') + current.getCompUnit());
         }else{
             //when foodDetails is not yet initialized
             foodDetailsHolder.textViewbestloc.setText("No value");

@@ -9,10 +9,13 @@ public class FoodDetails {
     private String descript;
     @ColumnInfo(name = "BESTLOC")
     private Double bestloc;
+    @ColumnInfo(name = "COMPUNIT")
+    private String compUnit;
 
-    public FoodDetails(String descript, Double bestloc) {
+    public FoodDetails(String descript, Double bestloc, String compUnit) {
         this.descript = descript;
         this.bestloc = bestloc;
+        this.compUnit = compUnit;
     }
 
     public void setDescript(String descript) {
@@ -29,5 +32,9 @@ public class FoodDetails {
 
     public Double getBestloc() {
         return bestloc;
+    }
+
+    public String getCompUnit() {
+        return compUnit;
     }
 }
