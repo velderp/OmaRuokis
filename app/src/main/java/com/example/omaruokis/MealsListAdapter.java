@@ -1,28 +1,34 @@
 package com.example.omaruokis;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.omaruokis.food_details.FoodDao;
 import com.example.omaruokis.food_details.FoodEaten;
+import com.example.omaruokis.food_details.FoodRoomDatabase;
 import com.project.omaruokis.R;
 
 import java.util.List;
-
-//RecyclerView.Adapter<FoodDetailsListAdapter.FoodDetailsHolder>
 
 public class MealsListAdapter extends RecyclerView.Adapter<MealsListAdapter.MealsHolder> {
 
     private final LayoutInflater inflater;
     private List<FoodEaten> meals;
+    private FoodRoomDatabase db;
 
     public MealsListAdapter(@NonNull Context context) {
         inflater = LayoutInflater.from(context);
+        db = FoodRoomDatabase.getDatabase(context);
     }
 
     @NonNull
@@ -41,17 +47,14 @@ public class MealsListAdapter extends RecyclerView.Adapter<MealsListAdapter.Meal
         }
     }
 
-    public void setMeals(List<FoodEaten> foodEatens){
+    public void setMeals(List<FoodEaten> foodEaten){
         if( meals != null) {
             meals.clear();
         }
-        meals = foodEatens;
+        meals = foodEaten;
         notifyDataSetChanged();
     }
 
-    public void updateData(){
-        notifyDataSetChanged();
-    }
 
     @Override
     public int getItemCount() {
@@ -62,25 +65,67 @@ public class MealsListAdapter extends RecyclerView.Adapter<MealsListAdapter.Meal
         }
     }
 
-    public class MealsHolder extends RecyclerView.ViewHolder{
+    public class MealsHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView textViewMealTextFoodName;
         private final EditText editTextMealEditText;
-        //private final Button buttonMealButtonRemove;
+        private final ImageView imageViewMealButtonRemove;
         final MealsListAdapter adapter;
 
         private MealsHolder(View itemView, MealsListAdapter adapter){
             super(itemView);
             textViewMealTextFoodName = itemView.findViewById(R.id.mealTextFoodName);
             editTextMealEditText = itemView.findViewById(R.id.mealEditText);
-            //buttonMealButtonRemove = itemView.findViewById(R.id.mealButtonRemove);
+            imageViewMealButtonRemove = itemView.findViewById(R.id.mealButtonRemove);
             this.adapter = adapter;
 
-            //buttonMealButtonRemove.setOnClickListener(this);
+            imageViewMealButtonRemove.setOnClickListener(this);
+            editTextMealEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if(actionId == EditorInfo.IME_ACTION_DONE){
+                        FoodEaten foodEaten = meals.get(getLayoutPosition());
+                        foodEaten.setFoodQuantity(Double.parseDouble(v.getText().toString()));
+                        new setFoodEatenQuantityAsyncTask(db.wordDao()).execute(foodEaten);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            });
         }
-        /*
+
         @Override
         public void onClick(View v) {
+            new deleteAsyncTask(db.wordDao()).execute(meals.get(getLayoutPosition()));
+        }
+    }
 
-        }*/
+    private static class deleteAsyncTask extends AsyncTask<FoodEaten, Void, Void>{
+
+        private FoodDao asyncTaskDao;
+
+        deleteAsyncTask(FoodDao dao){
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(FoodEaten... foodEatens) {
+            asyncTaskDao.deleteFoodEaten(foodEatens[0]);
+            return null;
+        }
+    }
+    private static class setFoodEatenQuantityAsyncTask extends AsyncTask<FoodEaten, Void, Void>{
+
+        private FoodDao asyncTaskDao;
+
+        public setFoodEatenQuantityAsyncTask(FoodDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(FoodEaten... foodEatens) {
+            asyncTaskDao.updateFoodEatenQuantity(foodEatens[0]);
+            return null;
+        }
     }
 }

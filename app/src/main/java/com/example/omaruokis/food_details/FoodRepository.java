@@ -62,6 +62,10 @@ public class FoodRepository {
         return mFoodDao.findFoodEatenByDate(date);
     }
 
+    public void deleteFoodEaten(FoodEaten foodEaten){
+        mFoodDao.deleteFoodEaten(foodEaten);
+    }
+
     private static class insertAsyncTask extends AsyncTask<FoodEaten, Void, Void> {
 
         private FoodDao mAsyncTaskDao;

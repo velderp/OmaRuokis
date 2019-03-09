@@ -112,24 +112,24 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
 
 
     }
-        //async for sql
-        private static class insertAsyncTask extends AsyncTask<Favorite, Void, Void> {
+    //async for sql
+    private static class insertAsyncTask extends AsyncTask<Favorite, Void, Void> {
 
-            private FoodDao mAsyncTaskDao;
+        private FoodDao mAsyncTaskDao;
 
-            insertAsyncTask(FoodDao dao) {
-                mAsyncTaskDao = dao;
-            }
-
-            @Override
-            protected Void doInBackground(final Favorite... params) {
-                if(mAsyncTaskDao.findFavorite(params[0].getFoodId()).isEmpty()) {
-                    mAsyncTaskDao.insert(params[0]);
-                }else{
-                    mAsyncTaskDao.deleteFavorite(params[0]);
-                }
-                return null;
-            }
+        insertAsyncTask(FoodDao dao) {
+            mAsyncTaskDao = dao;
         }
+
+        @Override
+        protected Void doInBackground(final Favorite... params) {
+            if(mAsyncTaskDao.findFavorite(params[0].getFoodId()).isEmpty()) {
+                    mAsyncTaskDao.insert(params[0]);
+            }else{
+                mAsyncTaskDao.deleteFavorite(params[0]);
+            }
+            return null;
+        }
+    }
 }
 

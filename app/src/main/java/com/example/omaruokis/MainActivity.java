@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private FoodViewModel foodViewModel;
     private MealsListAdapter mealsListAdapter;
-    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,22 +69,14 @@ public class MainActivity extends AppCompatActivity {
                     prefs.prefGetUserWeight()));
         }
 
-
-        RecyclerView recyclerView =findViewById(R.id.mainRecyclerviewMeals);
+        //RecyclerView for daily meal quantity and deleting
+        RecyclerView recyclerView = findViewById(R.id.mainRecyclerviewMeals);
         mealsListAdapter = new MealsListAdapter(this);
         recyclerView.setAdapter(mealsListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        //ViewModel can be used for separating non ui logic. Used here as intermediary for accessing database commands.
         foodViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
-        /*String date = DateHolder.getInstance().currentDateToString();
-        LiveData<List<FoodEaten>> listLiveData = foodViewModel.findFoodEatenByDate(date);
-        listLiveData.observe(this, new Observer<List<FoodEaten>>() {
-            @Override
-            public void onChanged(@Nullable List<FoodEaten> foodEatens) {
-                mealsListAdapter.setMeals(foodEatens);
-                Log.d("myMessage2", "onChanged: meals adapter update");
-            }
-        });*/
+        updateAdapter();
     }
 
     @Override
@@ -291,15 +282,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateAdapter(){
-        String date = DateHolder.getInstance().currentDateToString();
+        String date = DateHolder.getInstance().dateToString();
         LiveData<List<FoodEaten>> listLiveData = foodViewModel.findFoodEatenByDate(date);
         listLiveData.observe(this, new Observer<List<FoodEaten>>() {
             @Override
             public void onChanged(@Nullable List<FoodEaten> foodEatens) {
                 mealsListAdapter.setMeals(foodEatens);
-                Log.d("myMessage2", "onChanged: meals adapter update");
             }
         });
-        mealsListAdapter.updateData();
     }
 }

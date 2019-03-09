@@ -54,6 +54,10 @@ public class FoodViewModel extends AndroidViewModel {
         return mRepository.findFoodEatenByDate(date);
     }
 
+    public void deleteFoodEaten(FoodEaten foodEaten){
+        mRepository.deleteFoodEaten(foodEaten);
+    }
+
 
 
 }

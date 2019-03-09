@@ -6,6 +6,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -47,6 +48,12 @@ public interface FoodDao {
 
     @Query("SELECT * FROM food_eaten WHERE DATE LIKE :date")
     LiveData<List<FoodEaten>> findFoodEatenByDate(String date);
+
+    @Delete
+    void deleteFoodEaten(FoodEaten foodEaten);
+
+    @Update
+    void updateFoodEatenQuantity(FoodEaten foodEaten);
 
 
 
