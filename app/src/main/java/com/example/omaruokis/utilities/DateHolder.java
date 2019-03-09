@@ -28,4 +28,9 @@ public class DateHolder {
         InputChecker checker = new InputChecker();
         return checker.formatDate(this.date);
     }
+
+    public String currentDateToString () {
+        InputChecker checker = new InputChecker();
+        return checker.formatDate(Calendar.getInstance().getTime());
+    }
 }
