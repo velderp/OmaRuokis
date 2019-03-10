@@ -13,7 +13,7 @@
         android:id="@+id/mainContents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="600dp">
+        android:minHeight="950dp">
 
 
         <TextView
