@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class UserPrefs extends InputChecker {
+    // SharedPreferences key strings
     private static final String PREF_USER = "UserInfo";
     private static final String USER_DOB = "DateOfBirth";
     private static final String USER_SEX = "Sex";
@@ -11,6 +12,7 @@ public class UserPrefs extends InputChecker {
     private static final String USER_HEIGHT = "Height";
     private static final String USER_PAL = "DefaultActivityLevel";
     private static final String USER_INFO_FILLED = "InfoFilled";
+    // User details min/max values
     private static final int MIN_HEIGHT = 24;
     private static final int MAX_HEIGHT = 272;
     public static final int MIN_WEIGHT = 1;
@@ -31,10 +33,12 @@ public class UserPrefs extends InputChecker {
         return prefGet().edit();
     }
 
+    // Returns saved date of birth
     public String prefGetUserDob() {
         return prefGet().getString(USER_DOB, "");
     }
 
+    // Checks date of birth validity and saves it if valid; returns true if valid, otherwise false
     public boolean prefSetUserDob(String dateOfBirth) {
         if (checkDateValidity(dateOfBirth, MIN_YEAR, MAX_YEAR)
                 && dateBeforeCurrent(dateOfBirth)) {
@@ -44,6 +48,7 @@ public class UserPrefs extends InputChecker {
         return false;
     }
 
+    // Returns saved sex
     public String prefGetUserSex() {
         return prefGet().getString(USER_SEX, "M");
     }
@@ -52,6 +57,7 @@ public class UserPrefs extends InputChecker {
         prefEdit().putString(USER_SEX, sex).apply();
     }
 
+    // Returns saved weight; -1 if not saved
     public int prefGetUserWeight() {
         return prefGet().getInt(USER_WEIGHT, -1);
     }
@@ -64,6 +70,7 @@ public class UserPrefs extends InputChecker {
         return false;
     }
 
+    // Returns saved height; -1 if not saved
     public int prefGetUserHeight() {
         return prefGet().getInt(USER_HEIGHT, -1);
     }
@@ -76,6 +83,7 @@ public class UserPrefs extends InputChecker {
         return false;
     }
 
+    // Returns saved physical activity level; 0 if not saved
     public int prefGetUserPal() {
         return prefGet().getInt(USER_PAL, 0);
     }
@@ -84,6 +92,7 @@ public class UserPrefs extends InputChecker {
         prefEdit().putInt(USER_PAL, activityLevel).apply();
     }
 
+    // Returns true if user details are saved
     public boolean prefGetInfoFilled() {
         return prefGet().getBoolean(USER_INFO_FILLED, false);
     }

@@ -62,7 +62,7 @@ public class FoodViewModel extends AndroidViewModel {
         mRepository.insertUsersDay(usersDay);
     }
 
-    LiveData<UsersDay> findUsersDayByDate(String date){
+    public LiveData<UsersDay> findUsersDayByDate(String date){
         return mRepository.findUsersDayByDate(date);
     }
 

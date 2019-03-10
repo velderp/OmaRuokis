@@ -29,6 +29,7 @@ import android.widget.ToggleButton;
 import com.example.omaruokis.food_details.FoodEaten;
 import com.example.omaruokis.food_details.FoodSearchActivity;
 import com.example.omaruokis.food_details.FoodViewModel;
+import com.example.omaruokis.food_details.UsersDay;
 import com.project.omaruokis.R;
 import com.example.omaruokis.utilities.BodyCalc;
 import com.example.omaruokis.utilities.DateHolder;
@@ -36,6 +37,7 @@ import com.example.omaruokis.utilities.InputChecker;
 import com.example.omaruokis.utilities.UserPrefs;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -115,16 +117,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI() {
         UserPrefs prefs = new UserPrefs(this);
+        setDate();
         if (prefs.prefGetInfoFilled()) {
             if (selectedDateIsToday()) {
                 findViewById(R.id.mainCurrentDateButton).setVisibility(View.INVISIBLE);
-                getDetailsFromPrefs();
             } else {
                 findViewById(R.id.mainCurrentDateButton).setVisibility(View.VISIBLE);
-                getDetailsFromDB();
             }
-            setDate();
-            bodyCalc();
+            getDetailsFromDB();
         }
         toggleMealsView();
     }
@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
                     updateAdapter();
 
+                    bodyCalc();
                     updateUI();
                 } else {
                     errorMessage(getString(R.string.main_date_error));
@@ -188,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DateHolder.getInstance().resetDate();
+                updateAdapter();
                 updateUI();
             }
         });
@@ -204,6 +206,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Save meals to database
+                String date = DateHolder.getInstance().dateToString();
+                Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
+                int activityLevel = spinner.getSelectedItemPosition();
+                EditText et = findViewById(R.id.editMainWeight);
+                int weight = Integer.parseInt(et.getText().toString());
+                UsersDay usersDay = new UsersDay(date, activityLevel, weight);
+                foodViewModel.insertUsersDay(usersDay);
+                if (selectedDateIsToday()) {
+                    saveWeightToPrefs();
+                }
                 updateUI();
             }
         });
@@ -216,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateUI();
+                bodyCalc();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -267,19 +279,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getDetailsFromPrefs() {
-        UserPrefs prefs = new UserPrefs(this);
+    private void saveWeightToPrefs() {
+        UserPrefs pref = new UserPrefs(this);
         EditText et = findViewById(R.id.editMainWeight);
-        et.setText(Integer.toString(prefs.prefGetUserWeight()));
-        Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
-        spinner.setSelection(prefs.prefGetUserPal());
+        String weight = et.getText().toString();
+        pref.prefSetUserWeight(weight);
     }
 
     private void getDetailsFromDB() {
-        EditText et = findViewById(R.id.editMainWeight);
-        et.setText("100");
-        Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
-        spinner.setSelection(0);
+        setDate();
+        String date = DateHolder.getInstance().dateToString();
+        LiveData<UsersDay> dayLiveData = foodViewModel.findUsersDayByDate(date);
+        dayLiveData.observe(this, new Observer<UsersDay>() {
+            @Override
+            public void onChanged(@Nullable UsersDay usersDay) {
+                if (usersDay == null) {
+                    createUsersDay();
+                } else {
+                    EditText et = findViewById(R.id.editMainWeight);
+                    et.setText(Integer.toString(usersDay.getWeight()));
+                    Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
+                    spinner.setSelection(usersDay.getActivityLevel());
+                }
+            }
+        });
     }
 
     private void updateAdapter(){
@@ -291,5 +314,18 @@ public class MainActivity extends AppCompatActivity {
                 mealsListAdapter.setMeals(foodEatens);
             }
         });
+    }
+
+    private void createUsersDay() {
+        UserPrefs pref = new UserPrefs(this);
+        String date = DateHolder.getInstance().dateToString();
+        int activityLevel = pref.prefGetUserPal();
+        int weight = pref.prefGetUserWeight();
+        UsersDay usersDay = new UsersDay(date, activityLevel, weight);
+        foodViewModel.insertUsersDay(usersDay);
+        EditText et = findViewById(R.id.editMainWeight);
+        et.setText(Integer.toString(usersDay.getWeight()));
+        Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
+        spinner.setSelection(usersDay.getActivityLevel());
     }
 }
