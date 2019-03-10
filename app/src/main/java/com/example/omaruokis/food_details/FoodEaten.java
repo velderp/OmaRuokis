@@ -35,6 +35,38 @@ public class FoodEaten {
         this.foodQuantity = 100.0;
     }
 
+    public Double calculateTotalEnergy(){
+        if(foodQuantity > 0){
+            return enerc * (foodQuantity / 100.0);
+        } else {
+            return 0.0;
+        }
+    }
+
+    public Double calculateTotalCarbohydrates(){
+        if(foodQuantity > 0){
+            return choavl * (foodQuantity / 100.0);
+        } else {
+            return 0.0;
+        }
+    }
+
+    public Double calculateTotalProteins(){
+        if(foodQuantity > 0){
+            return prot * (foodQuantity / 100.0);
+        } else {
+            return 0.0;
+        }
+    }
+
+    public Double calculateTotalFat(){
+        if(foodQuantity > 0){
+            return fat * (foodQuantity / 100.0);
+        } else {
+            return 0.0;
+        }
+    }
+
     public void setID(int ID) {
         this.ID = ID;
     }

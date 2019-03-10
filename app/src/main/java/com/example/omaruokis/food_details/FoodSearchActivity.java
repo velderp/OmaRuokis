@@ -29,7 +29,7 @@ import java.util.List;
  * before search favorites are shown in recyclerview after search,
  * search results are shown in same recyclerview replacing favorites.
  * By taping food name in recyclerview is FoodDetailsActivity launched.
- * By taping imageview star next to food name is foodId added to favorites.
+ * By taping imageview star next to food name is foodId added to favorites representing it as favorite.
  * @author m
  */
 public class FoodSearchActivity extends AppCompatActivity {
@@ -66,20 +66,22 @@ public class FoodSearchActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+        //RecyclerView for favorites and search
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         adapter = new FoodListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
+        //getting the same FoodviewModel.
         mFoodViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
         listLiveDataFoodNameFi = mFoodViewModel.findFoodByName("peruna");
         mFoodViewModel.getFavorites().observe(this, new Observer<List<FoodNameFi>>() {
             @Override
             public void onChanged(@Nullable final List<FoodNameFi> foodNameFis) {
-                //update the cached copy of the foods in the adapter.
+                //Show the number of favorites at ui
                 TextView textView = findViewById(R.id.textView3);
                 textView.setText(getString(R.string.favorites) + " " + foodNameFis.size());
+                //update the cached copy of the foods in the adapter for showing them on ui with favorite users foods.
                 adapter.setFoods(foodNameFis);
                 Log.d(FoodRoomDatabase.TAG, "onChanged: Observer Food");
             }
@@ -87,17 +89,16 @@ public class FoodSearchActivity extends AppCompatActivity {
         mFoodViewModel.getAllFavorites().observe(this, new Observer<List<Favorite>>() {
             @Override
             public void onChanged(@Nullable List<Favorite> favorites) {
-                //update the cached copy of the favoritesFoodIds in the adapter
+                //update the cached copy of the FOODIDs (favoritesFoodIds) of user favorited foods in the adapter for determining if they are favorites.
                 adapter.setFavorites(favorites);
-                Log.d(FoodRoomDatabase.TAG, "onChanged: Observer Favorite");
-                for(int i = 0; i < favorites.size(); i++){
-                    Log.d(FoodRoomDatabase.TAG, "onChanged: " + favorites.get(i).getFoodId());
-                }
             }
         });
     }
 
-
+    /**
+     * Find Button for doing food name search from database with users text input.
+     * @param view
+     */
     public void buttonFind(View view){
         EditText editTextFind = findViewById(R.id.editTextFind);
         mFoodViewModel.findFoodByName(editTextFind.getText().toString()).observe(this, new Observer<List<FoodNameFi>>() {
@@ -105,7 +106,9 @@ public class FoodSearchActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<FoodNameFi> foodNameFis) {
                 TextView textView = findViewById(R.id.textView3);
                 int i = foodNameFis.size();
+                //Show the number of search results on ui
                 textView.setText(getString(R.string.results) + " " + i);
+                //update the cached copy of the foods in the adapter for showing them on ui with food search results.
                 adapter.setFoods(foodNameFis);
             }
         });

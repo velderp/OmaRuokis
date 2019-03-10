@@ -5,6 +5,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+/**
+ * Annotated class for Room to create database from. Represent "eufdname_FI" database table acquired from Fineli's Open Data.
+ * Refer to Fineli_Rel_19/descript.txt for all Fineli's table descriptions.
+ */
 @Entity(tableName = "eufdname_FI")
 public class EufdnameFi {
 

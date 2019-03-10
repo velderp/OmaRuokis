@@ -5,8 +5,6 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.omaruokis.utilities.DateHolder;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -32,8 +30,6 @@ public class FoodRepository {
         mFoodDao = db.wordDao();
 
         favoritess = mFoodDao.getAllFavorites();
-        //UsersDay usersDay = mFoodDao.findUsersDayByDate(DateHolder.getInstance().dateToString());
-        //LiveData<UsersDay> usersDayByDate = mFoodDao.findUsersDayByDate(DateHolder.getInstance().dateToString());
 
     }
 
@@ -62,6 +58,10 @@ public class FoodRepository {
         new insertAsyncTask(mFoodDao).execute(foodEaten);
     }
 
+    public void deleteFoodEaten(FoodEaten foodEaten){
+        mFoodDao.deleteFoodEaten(foodEaten);
+    }
+
     LiveData<List<FoodEaten>> findFoodEatenByDate(String date){
         return mFoodDao.findFoodEatenByDate(date);
     }
@@ -70,25 +70,21 @@ public class FoodRepository {
         new insertUsersDayAsyncTask(mFoodDao).execute(usersDay);
     }
 
-    LiveData<UsersDay> findUsersDayByDate(String date){
+    public LiveData<UsersDay> findUsersDayByDate(String date){
         return mFoodDao.findUsersDayByDate(date);
-    }
-
-    public void deleteFoodEaten(FoodEaten foodEaten){
-        mFoodDao.deleteFoodEaten(foodEaten);
     }
 
     private static class insertAsyncTask extends AsyncTask<FoodEaten, Void, Void> {
 
-        private FoodDao mAsyncTaskDao;
+        private FoodDao asyncTaskDao;
 
         insertAsyncTask(FoodDao dao) {
-            mAsyncTaskDao = dao;
+            asyncTaskDao = dao;
         }
 
         @Override
         protected Void doInBackground(final FoodEaten... params) {
-            mAsyncTaskDao.insertFoodEaten(params[0]);
+            asyncTaskDao.insertFoodEaten(params[0]);
             return null;
         }
     }

@@ -4,6 +4,10 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.support.annotation.NonNull;
 
+/**
+ * Annotated class for Room to create database from. Represent "component_value" database table acquired from Fineli's Open Data.
+ * Refer to Fineli_Rel_19/descript.txt for all Fineli's table descriptions.
+ */
 @Entity(tableName = "component_value", primaryKeys = {"FOODID", "EUFDNAME"})
 public class ComponentValue {
 

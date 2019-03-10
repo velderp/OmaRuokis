@@ -5,6 +5,10 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+/**
+ * Annotated class for Room to create database table from.
+ * Stores users favorite foods foodIds.
+ */
 @Entity(tableName = "favorite")
 public class Favorite {
 
