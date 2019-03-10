@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,18 +35,26 @@ import com.example.omaruokis.utilities.InputChecker;
 import com.example.omaruokis.utilities.UserPrefs;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String LOCALE = "fi-FI";
+
+    static final String LOCALE = "fi-FI";
+    private static final String HM_KEY_CALORIES = "Calories";
+    private static final String HM_KEY_CARBS = "Carbs";
+    private static final String HM_KEY_LIPIDS = "Lipids";
+    private static final String HM_KEY_PROTEINS = "Proteins";
     private static final double PAL_INCREMENTS = 0.3;
     private static final double PAL_MINIMUM = 1.0;
     private DatePickerDialog datePickerDialog;
     private FoodViewModel foodViewModel;
     private MealsListAdapter mealsListAdapter;
+    private TextView dateTextView;
+    private EditText weightEditText;
+    private Spinner activityLevelSpinner;
+    private UserPrefs userPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,20 +63,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        dateTextView = findViewById(R.id.textMainDate);
+        weightEditText = findViewById(R.id.editMainWeight);
+        activityLevelSpinner = findViewById(R.id.spinnerMainActivityLevel);
+        userPrefs = new UserPrefs(this);
+
         ToggleButton toggleButton = findViewById(R.id.mainToggleMeals);
         toggleButton.setChecked(true);
         setDate();
         setListeners();
         setDatePicker();
         // Check for saved user info. If InfoFilled is not set as true, UserInfoActivity is started.
-        UserPrefs prefs = new UserPrefs(this);
-        if (!prefs.prefGetInfoFilled()) {
+        if (!userPrefs.prefGetInfoFilled()) {
             Intent intent = new Intent(this, UserInfoActivity.class);
             startActivity(intent);
         } else {
-            EditText et = findViewById(R.id.editMainWeight);
-            et.setText(String.format(Locale.forLanguageTag(LOCALE), "%d",
-                    prefs.prefGetUserWeight()));
+            weightEditText.setText(String.format(Locale.forLanguageTag(LOCALE), "%d",
+                    userPrefs.prefGetUserWeight()));
         }
 
         //RecyclerView for daily meal quantity and deleting
@@ -117,9 +126,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        UserPrefs prefs = new UserPrefs(this);
         setDate();
-        if (prefs.prefGetInfoFilled()) {
+        if (userPrefs.prefGetInfoFilled()) {
             if (selectedDateIsToday()) {
                 findViewById(R.id.mainCurrentDateButton).setVisibility(View.INVISIBLE);
             } else {
@@ -131,20 +139,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void bodyCalc() {
-        UserPrefs prefs = new UserPrefs(this);
         InputChecker checker = new InputChecker();
-        EditText et = findViewById(R.id.editMainWeight);
-        if (checker.checkInt(et.getText().toString(), UserPrefs.MIN_WEIGHT, UserPrefs.MAX_WEIGHT)) {
-            int weight = Integer.parseInt(et.getText().toString());
-            int height = prefs.prefGetUserHeight();
-            String sex = prefs.prefGetUserSex();
-            Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
-            double pal = spinner.getSelectedItemPosition() * PAL_INCREMENTS + PAL_MINIMUM;
-            String dob = prefs.prefGetUserDob();
-            TextView tv = findViewById(R.id.textMainDate);
-            String date = tv.getText().toString();
+        if (checker.checkInt(weightEditText.getText().toString(), UserPrefs.MIN_WEIGHT,
+                UserPrefs.MAX_WEIGHT)) {
+            int weight = Integer.parseInt(weightEditText.getText().toString());
+            int height = userPrefs.prefGetUserHeight();
+            String sex = userPrefs.prefGetUserSex();
+            double pal = activityLevelSpinner.getSelectedItemPosition() * PAL_INCREMENTS
+                    + PAL_MINIMUM;
+            String dob = userPrefs.prefGetUserDob();
+            String date = dateTextView.getText().toString();
             BodyCalc calc = new BodyCalc(weight, height, sex, pal, dob, date);
-            tv = findViewById(R.id.textMainCalcBmi);
+            TextView tv = findViewById(R.id.textMainCalcBmi);
             tv.setText(String.format(Locale.forLanguageTag(LOCALE), "%.2f", calc.calcBmi()));
             tv = findViewById(R.id.textMainCalcTee);
             tv.setText(String.format(Locale.forLanguageTag(LOCALE), "%d", calc.calcTee()));
@@ -208,10 +214,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Save meals to database
                 String date = DateHolder.getInstance().dateToString();
-                Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
-                int activityLevel = spinner.getSelectedItemPosition();
-                EditText et = findViewById(R.id.editMainWeight);
-                int weight = Integer.parseInt(et.getText().toString());
+                int activityLevel = activityLevelSpinner.getSelectedItemPosition();
+                int weight = Integer.parseInt(weightEditText.getText().toString());
                 UsersDay usersDay = new UsersDay(date, activityLevel, weight);
                 foodViewModel.insertUsersDay(usersDay);
                 if (selectedDateIsToday()) {
@@ -224,9 +228,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.activity_level_array_fi));
-        Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        activityLevelSpinner.setAdapter(adapter);
+        activityLevelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 bodyCalc();
@@ -248,9 +251,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDate() {
-        TextView tv = findViewById(R.id.textMainDate);
         String date = DateHolder.getInstance().dateToString();
-        tv.setText(date);
+        dateTextView.setText(date);
     }
 
     private boolean selectedDateIsToday() {
@@ -266,8 +268,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isAfterBirth (Calendar calendar) {
         InputChecker checker = new InputChecker();
-        UserPrefs prefs = new UserPrefs(this);
-        return calendar.after(checker.dateStringToCalendar(prefs.prefGetUserDob()));
+        return calendar.after(checker.dateStringToCalendar(userPrefs.prefGetUserDob()));
     }
 
     private void toggleMealsView() {
@@ -281,10 +282,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveWeightToPrefs() {
-        UserPrefs pref = new UserPrefs(this);
-        EditText et = findViewById(R.id.editMainWeight);
-        String weight = et.getText().toString();
-        pref.prefSetUserWeight(weight);
+        String weight = weightEditText.getText().toString();
+        userPrefs.prefSetUserWeight(weight);
     }
 
     private void getDetailsFromDB() {
@@ -297,10 +296,9 @@ public class MainActivity extends AppCompatActivity {
                 if (usersDay == null) {
                     createUsersDay();
                 } else {
-                    EditText et = findViewById(R.id.editMainWeight);
-                    et.setText(Integer.toString(usersDay.getWeight()));
-                    Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
-                    spinner.setSelection(usersDay.getActivityLevel());
+                    weightEditText.setText(String.format(Locale.forLanguageTag(LOCALE), "%d",
+                            usersDay.getWeight()));
+                    activityLevelSpinner.setSelection(usersDay.getActivityLevel());
                 }
             }
         });
@@ -319,16 +317,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createUsersDay() {
-        UserPrefs pref = new UserPrefs(this);
         String date = DateHolder.getInstance().dateToString();
-        int activityLevel = pref.prefGetUserPal();
-        int weight = pref.prefGetUserWeight();
+        int activityLevel = userPrefs.prefGetUserPal();
+        int weight = userPrefs.prefGetUserWeight();
         UsersDay usersDay = new UsersDay(date, activityLevel, weight);
         foodViewModel.insertUsersDay(usersDay);
-        EditText et = findViewById(R.id.editMainWeight);
-        et.setText(Integer.toString(usersDay.getWeight()));
-        Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
-        spinner.setSelection(usersDay.getActivityLevel());
+        weightEditText.setText(String.format(Locale.forLanguageTag(LOCALE), "%d",
+                usersDay.getWeight()));
+        activityLevelSpinner.setSelection(usersDay.getActivityLevel());
     }
 
     private void updateNutrients() {
@@ -337,16 +333,16 @@ public class MainActivity extends AppCompatActivity {
         listLiveData.observe(this, new Observer<List<FoodEaten>>() {
             @Override
             public void onChanged(@Nullable List<FoodEaten> foodEatens) {
-                HashMap<String, String> nutrients = new HashMap<>();
+                HashMap<String, String> nutrients;
                 nutrients = calcNutrients(foodEatens);
                 TextView tv = findViewById(R.id.textMainSumCalories);
-                tv.setText(nutrients.get("Calories"));
+                tv.setText(nutrients.get(HM_KEY_CALORIES));
                 tv = findViewById(R.id.textMainSumCarbs);
-                tv.setText(nutrients.get("Carbs"));
+                tv.setText(nutrients.get(HM_KEY_CARBS));
                 tv = findViewById(R.id.textMainSumLipids);
-                tv.setText(nutrients.get("Lipids"));
+                tv.setText(nutrients.get(HM_KEY_LIPIDS));
                 tv = findViewById(R.id.textMainSumProteins);
-                tv.setText(nutrients.get("Proteins"));
+                tv.setText(nutrients.get(HM_KEY_PROTEINS));
             }
         });
     }

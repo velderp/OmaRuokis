@@ -10,9 +10,9 @@ public class InputChecker extends Formatter {
     }
 
     boolean checkDateValidity(String date, int minYear, int maxYear) {
-        df.setLenient(false);
+        SIMPLE_DATE_FORMAT.setLenient(false);
         try {
-            df.parse(date);
+            SIMPLE_DATE_FORMAT.parse(date);
         } catch (ParseException e) {
             return false;
         }
@@ -22,12 +22,12 @@ public class InputChecker extends Formatter {
     }
 
     boolean dateBeforeCurrent(String input) {
-        df.setLenient(false);
+        SIMPLE_DATE_FORMAT.setLenient(false);
         Date date;
         Date current = Calendar.getInstance().getTime();
         try {
-            date = df.parse(input);
-            current = df.parse(df.format(current));
+            date = SIMPLE_DATE_FORMAT.parse(input);
+            current = SIMPLE_DATE_FORMAT.parse(SIMPLE_DATE_FORMAT.format(current));
         } catch (ParseException e) {
             return false;
         }
