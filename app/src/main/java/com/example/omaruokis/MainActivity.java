@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        ToggleButton toggleButton = findViewById(R.id.mainToggleMeals);
+        toggleButton.setChecked(true);
         setDate();
         setListeners();
         setDatePicker();
