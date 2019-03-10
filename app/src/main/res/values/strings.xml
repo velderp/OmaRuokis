@@ -44,4 +44,5 @@
     <string name="main_nutrients_proteins">Proteiini:</string>
     <string name="unit_grams">g</string>
     <string name="amount_zero">0</string>
+    <string name="buttonEat">Syö</string>
 </resources>

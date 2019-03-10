@@ -4,6 +4,13 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+/**
+ * Annotated class for Room to create database table from. Contains table columns from Fineli's Open Data:
+ * "foodname_FI.FOODNAME", "{foodname_FI, component_value}.FOODID" and "component_value" "BESTLOC"
+ * datavalues which "EUFDNAME" datavalues were "ENERC", "CHOAVL", "PROT".
+ * Refer to Fineli_Rel_19/descript.txt for all Fineli's table descriptions.
+ * Class represents occurrence of food eating. It stores main nutrients and quantity of the meal.
+ */
 import com.example.omaruokis.utilities.DateHolder;
 
 @Entity(tableName = "food_eaten")

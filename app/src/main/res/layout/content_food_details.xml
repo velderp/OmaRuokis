@@ -37,11 +37,16 @@
     <Button
         android:id="@+id/addDaysFood"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:onClick="buttonAddDaysFood"
-        android:text="Button"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textViewFoodId"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="@string/buttonEat"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="@color/colorTextPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerviewDetails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
