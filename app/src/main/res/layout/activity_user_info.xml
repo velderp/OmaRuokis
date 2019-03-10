@@ -19,7 +19,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="@string/user_info_header"
-            android:textSize="30sp"
+            android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/user_info_dob"
-            android:textSize="18sp"
+            android:textSize="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textUserInfoHeader" />
 
@@ -42,7 +42,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/user_info_sex"
-            android:textSize="18sp"
+            android:textSize="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editDob" />
 
@@ -53,7 +53,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/user_info_weight"
-            android:textSize="18sp"
+            android:textSize="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroupSex" />
 
@@ -64,7 +64,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/user_info_height"
-            android:textSize="18sp"
+            android:textSize="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editWeight" />
 
@@ -75,7 +75,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/user_info_activity_level"
-            android:textSize="18sp"
+            android:textSize="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editHeight" />
 
@@ -88,7 +88,7 @@
             android:hint="@string/user_info_hint_dob"
             android:importantForAutofill="no"
             android:inputType="date"
-            android:textSize="18sp"
+            android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -132,11 +132,12 @@
             android:ems="10"
             android:gravity="center_horizontal"
             android:hint="@string/user_info_hint_weight"
+            android:importantForAutofill="no"
             android:inputType="number"
+            android:textSize="18dp"
             app:layout_constraintEnd_toStartOf="@+id/textUserInfoUnitWeight"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroupSex"
-            android:importantForAutofill="no" />
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupSex" />
 
         <EditText
             android:id="@+id/editHeight"
@@ -146,11 +147,12 @@
             android:ems="10"
             android:gravity="center_horizontal"
             android:hint="@string/user_info_hint_height"
+            android:importantForAutofill="no"
             android:inputType="number"
+            android:textSize="18dp"
             app:layout_constraintEnd_toStartOf="@+id/textUserInfoUnitHeight"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/editWeight"
-            android:importantForAutofill="no" />
+            app:layout_constraintTop_toBottomOf="@+id/editWeight" />
 
         <Spinner
             android:id="@+id/spinnerActivityLevel"
@@ -173,7 +175,7 @@
             android:layout_marginBottom="16dp"
             android:onClick="checkAndSave"
             android:text="@string/button_save"
-            android:textSize="18sp"
+            android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinnerActivityLevel" />
@@ -191,7 +193,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/unit_weight"
-            android:textSize="18sp"
+            android:textSize="18dp"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/radioGroupSex" />
 
@@ -201,7 +203,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/unit_height"
-            android:textSize="18sp"
+            android:textSize="18dp"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/editWeight" />
 
