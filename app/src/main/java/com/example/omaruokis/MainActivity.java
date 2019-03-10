@@ -38,6 +38,7 @@ import com.example.omaruokis.utilities.UserPrefs;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -303,6 +304,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        updateNutrients();
     }
 
     private void updateAdapter(){
@@ -327,5 +329,45 @@ public class MainActivity extends AppCompatActivity {
         et.setText(Integer.toString(usersDay.getWeight()));
         Spinner spinner = findViewById(R.id.spinnerMainActivityLevel);
         spinner.setSelection(usersDay.getActivityLevel());
+    }
+
+    private void updateNutrients() {
+        String date = DateHolder.getInstance().dateToString();
+        LiveData<List<FoodEaten>> listLiveData = foodViewModel.findFoodEatenByDate(date);
+        listLiveData.observe(this, new Observer<List<FoodEaten>>() {
+            @Override
+            public void onChanged(@Nullable List<FoodEaten> foodEatens) {
+                HashMap<String, String> nutrients = new HashMap<>();
+                nutrients = calcNutrients(foodEatens);
+                TextView tv = findViewById(R.id.textMainSumCalories);
+                tv.setText(nutrients.get("Calories"));
+                tv = findViewById(R.id.textMainSumCarbs);
+                tv.setText(nutrients.get("Carbs"));
+                tv = findViewById(R.id.textMainSumLipids);
+                tv.setText(nutrients.get("Lipids"));
+                tv = findViewById(R.id.textMainSumProteins);
+                tv.setText(nutrients.get("Proteins"));
+            }
+        });
+    }
+
+    private HashMap<String, String> calcNutrients(List<FoodEaten> foodEatens) {
+        int calories = 0;
+        int carbs = 0;
+        int lipids = 0;
+        int proteins = 0;
+        for (int i = 0; i < foodEatens.size(); i++){
+            calories += foodEatens.get(i).calculateTotalEnergy();
+            carbs += foodEatens.get(i).calculateTotalCarbohydrates();
+            lipids += foodEatens.get(i).calculateTotalFat();
+            proteins += foodEatens.get(i).calculateTotalProteins();
+        }
+        HashMap<String, String> nutrients = new HashMap<>();
+        nutrients.put("Calories", Integer.toString(calories));
+        nutrients.put("Carbs", Integer.toString(carbs));
+        nutrients.put("Lipids", Integer.toString(lipids));
+        nutrients.put("Proteins", Integer.toString(proteins));
+
+        return nutrients;
     }
 }
