@@ -55,6 +55,11 @@ public interface FoodDao {
     @Update
     void updateFoodEatenQuantity(FoodEaten foodEaten);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertUsersDay(UsersDay usersDay);
+
+    @Query("SELECT * FROM users_day WHERE DATE LIKE :date")
+    LiveData<UsersDay> findUsersDayByDate(String date);
 
 
 }
