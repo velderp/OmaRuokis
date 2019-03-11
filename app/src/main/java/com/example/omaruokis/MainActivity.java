@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText weightEditText;
     private Spinner activityLevelSpinner;
     private UserPrefs userPrefs;
+    private DateHolder dateHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         weightEditText = findViewById(R.id.editMainWeight);
         activityLevelSpinner = findViewById(R.id.spinnerMainActivityLevel);
         userPrefs = new UserPrefs(this);
+        dateHolder = DateHolder.getInstance();
 
         ToggleButton toggleButton = findViewById(R.id.mainToggleMeals);
         toggleButton.setChecked(true);
@@ -170,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 newDate.set(year, monthOfYear, dayOfMonth);
 
                 if (isAfterBirth(newDate)) {
-                    DateHolder.getInstance().setDate(newDate.getTime());
+                    dateHolder.setDate(newDate.getTime());
 
                     updateAdapter();
 
@@ -196,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.mainCurrentDateButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DateHolder.getInstance().resetDate();
+                dateHolder.resetDate();
                 updateAdapter();
                 updateUI();
             }
@@ -214,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Save meals to database
-                String date = DateHolder.getInstance().dateToString();
+                String date = dateHolder.dateToString();
                 int activityLevel = activityLevelSpinner.getSelectedItemPosition();
                 int weight = Integer.parseInt(weightEditText.getText().toString());
                 UsersDay usersDay = new UsersDay(date, activityLevel, weight);
@@ -252,13 +254,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDate() {
-        String date = DateHolder.getInstance().dateToString();
+        String date = dateHolder.dateToString();
         dateTextView.setText(date);
     }
 
     private boolean selectedDateIsToday() {
-        String date = DateHolder.getInstance().dateToString();
-        return date.equals(DateHolder.getInstance().currentDateToString());
+        String date = dateHolder.dateToString();
+        return date.equals(dateHolder.currentDateToString());
     }
 
     private void errorMessage(String message) {
@@ -289,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getDetailsFromDB() {
         setDate();
-        String date = DateHolder.getInstance().dateToString();
+        String date = dateHolder.dateToString();
         LiveData<UsersDay> dayLiveData = foodViewModel.findUsersDayByDate(date);
         dayLiveData.observe(this, new Observer<UsersDay>() {
             @Override
@@ -307,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateAdapter(){
-        String date = DateHolder.getInstance().dateToString();
+        String date = dateHolder.dateToString();
         LiveData<List<FoodEaten>> listLiveData = foodViewModel.findFoodEatenByDate(date);
         listLiveData.observe(this, new Observer<List<FoodEaten>>() {
             @Override
@@ -318,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createUsersDay() {
-        String date = DateHolder.getInstance().dateToString();
+        String date = dateHolder.dateToString();
         int activityLevel = userPrefs.prefGetUserPal();
         int weight = userPrefs.prefGetUserWeight();
         UsersDay usersDay = new UsersDay(date, activityLevel, weight);
@@ -329,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateNutrients() {
-        String date = DateHolder.getInstance().dateToString();
+        String date = dateHolder.dateToString();
         LiveData<List<FoodEaten>> listLiveData = foodViewModel.findFoodEatenByDate(date);
         listLiveData.observe(this, new Observer<List<FoodEaten>>() {
             @Override

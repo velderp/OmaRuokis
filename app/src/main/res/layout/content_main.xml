@@ -23,7 +23,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:text="@string/main_nutrients_header"
-            android:textSize="27dp"
+            android:textSize="27sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMainTee" />
 
@@ -42,7 +42,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/empty_hint"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,7 +53,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/user_info_weight"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMainDate" />
 
@@ -67,10 +67,10 @@
             android:hint="@string/empty_hint"
             android:importantForAutofill="no"
             android:inputType="number"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/textView3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textMainDate" />
+            app:layout_constraintTop_toBottomOf="@+id/textMainDate" tools:targetApi="o"/>
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline4"
@@ -85,17 +85,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/unit_weight"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toBottomOf="@+id/textMainDate" />
 
         <TextView
             android:id="@+id/textMainActivityLevel"
-            android:layout_width="wrap_content"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/user_info_activity_level"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editMainWeight" />
 
@@ -106,9 +106,9 @@
             android:layout_marginEnd="16dp"
             android:entries="@array/activity_level_array_fi"
             android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toBottomOf="@+id/textMainActivityLevel"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/editMainWeight" />
+            app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
         <TextView
             android:id="@+id/textMainBmi"
@@ -117,7 +117,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/main_info_bmi"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinnerMainActivityLevel" />
 
@@ -127,18 +127,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/empty_hint"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/spinnerMainActivityLevel" />
 
         <TextView
             android:id="@+id/textMainTee"
-            android:layout_width="wrap_content"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/main_info_energy_consump"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMainBmi" />
 
@@ -149,7 +149,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/main_nutrients_calories"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMainNutrients" />
 
@@ -160,7 +160,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/main_nutrients_carbs"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMainCalories" />
 
@@ -171,7 +171,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/main_nutrients_lipids"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMainCarbs" />
 
@@ -182,7 +182,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/main_nutrients_proteins"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMainLipids" />
 
@@ -190,31 +190,29 @@
             android:id="@+id/textMainCalcTee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="@string/empty_hint"
-            android:textSize="18dp"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textMainBmi" />
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textMainTee"
+            app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
         <TextView
             android:id="@+id/textMainEnergyUnit"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:text="@string/unit_energy"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/textMainCalcTee"
-            app:layout_constraintTop_toBottomOf="@+id/textMainBmi" />
+            app:layout_constraintTop_toTopOf="@+id/textMainCalcTee" />
 
         <TextView
             android:id="@+id/textMainMealsHeader"
-            android:layout_width="wrap_content"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:text="@string/main_meals_header"
-            android:textSize="27dp"
+            android:textSize="27sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMainProteins" />
 
@@ -245,7 +243,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/amount_zero"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textMainNutrients" />
 
@@ -256,7 +254,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/unit_energy"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/textMainSumCalories"
             app:layout_constraintTop_toBottomOf="@+id/textMainNutrients" />
 
@@ -267,7 +265,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/unit_grams"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/textMainSumCarbs"
             app:layout_constraintTop_toBottomOf="@+id/textMainUnitCalories" />
 
@@ -278,7 +276,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/unit_grams"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/textMainSumLipids"
             app:layout_constraintTop_toBottomOf="@+id/textMainUnitCarbs" />
 
@@ -289,7 +287,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/unit_grams"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/textMainSumProteins"
             app:layout_constraintTop_toBottomOf="@+id/textMainUnitLipids" />
 
@@ -299,7 +297,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/amount_zero"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textMainSumCalories" />
 
@@ -309,7 +307,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/amount_zero"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textMainSumCarbs" />
 
@@ -319,7 +317,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/amount_zero"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textMainSumLipids" />
 
@@ -327,12 +325,12 @@
             android:id="@+id/mainSaveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/button_save"
-            android:textSize="14dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textMainMealsHeader"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textMainUnitProteins" />
+            app:layout_constraintTop_toTopOf="@+id/textMainMealsHeader" />
 
 
         <android.support.v7.widget.RecyclerView
@@ -348,13 +346,12 @@
             android:id="@+id/mainToggleMeals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:textOff="@string/main_meals_show"
             android:textOn="@string/main_meals_hide"
-            android:textSize="14dp"
-            app:layout_constraintStart_toEndOf="@+id/textMainMealsHeader"
-            app:layout_constraintTop_toBottomOf="@+id/textMainUnitProteins" />
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textMainMealsHeader"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toTopOf="@+id/textMainMealsHeader" />
 
     </android.support.constraint.ConstraintLayout>
     </ScrollView>

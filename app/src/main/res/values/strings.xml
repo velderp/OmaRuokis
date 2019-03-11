@@ -6,7 +6,7 @@
     <string name="user_info_sex">Sukupuoli:</string>
     <string name="user_info_weight">Paino:</string>
     <string name="user_info_height">Pituus:</string>
-    <string name="user_info_activity_level">Fyysinen aktiivisuus:</string>
+    <string name="user_info_activity_level">Fyysinen aktiivisuus (oletus):</string>
     <string name="button_save">Tallenna</string>
     <string name="user_info_male">Mies</string>
     <string name="user_info_female">Nainen</string>
