@@ -254,7 +254,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/unit_energy_kj"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/textMainSumCalories"
             app:layout_constraintTop_toBottomOf="@+id/textMainNutrients" />
 

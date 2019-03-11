@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Adapter for recyclerview of FoodSearchActivity. For displaying favorite foods and search results and
  * provides user inter activity for clicked items, opening details view for food or favoriting it.
+ * @author Mika
  */
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordViewHolder> {
 

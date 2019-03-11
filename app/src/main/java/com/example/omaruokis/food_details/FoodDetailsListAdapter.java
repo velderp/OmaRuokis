@@ -16,6 +16,7 @@ import java.util.Locale;
 
 /**
  * Adapter for recyclerview of FoodDetailsActivity. For displaying FoodDetails objects.
+ * @author Mika
  */
 public class FoodDetailsListAdapter extends RecyclerView.Adapter<FoodDetailsListAdapter.FoodDetailsHolder> {
     private final LayoutInflater inflater;
