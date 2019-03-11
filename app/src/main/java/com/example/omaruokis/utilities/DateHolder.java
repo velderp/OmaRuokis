@@ -3,7 +3,7 @@ package com.example.omaruokis.utilities;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DateHolder {
+public class DateHolder extends Formatter {
     private Date date;
 
     private static final DateHolder ourInstance = new DateHolder();
@@ -25,12 +25,10 @@ public class DateHolder {
     }
 
     public String dateToString () {
-        InputChecker checker = new InputChecker();
-        return checker.formatDateToString(this.date);
+        return formatDateToString(this.date);
     }
 
     public String currentDateToString () {
-        InputChecker checker = new InputChecker();
-        return checker.formatDateToString(Calendar.getInstance().getTime());
+        return formatDateToString(Calendar.getInstance().getTime());
     }
 }

@@ -9,7 +9,7 @@ public class InputChecker extends Formatter {
     public InputChecker() {
     }
 
-    boolean checkDateValidity(String date, int minYear, int maxYear) {
+    boolean checkYearValidity(String date, int minYear, int maxYear) {
         SIMPLE_DATE_FORMAT.setLenient(false);
         try {
             SIMPLE_DATE_FORMAT.parse(date);

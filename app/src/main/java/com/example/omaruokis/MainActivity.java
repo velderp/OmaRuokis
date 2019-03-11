@@ -28,6 +28,7 @@ import com.example.omaruokis.food_details.FoodEaten;
 import com.example.omaruokis.food_details.FoodSearchActivity;
 import com.example.omaruokis.food_details.FoodViewModel;
 import com.example.omaruokis.food_details.UsersDay;
+import com.example.omaruokis.utilities.Formatter;
 import com.project.omaruokis.R;
 import com.example.omaruokis.utilities.BodyCalc;
 import com.example.omaruokis.utilities.DateHolder;
@@ -267,8 +268,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isAfterBirth (Calendar calendar) {
-        InputChecker checker = new InputChecker();
-        return calendar.after(checker.dateStringToCalendar(userPrefs.prefGetUserDob()));
+        Formatter formatter = new Formatter();
+        return calendar.after(formatter.dateStringToCalendar(userPrefs.prefGetUserDob()));
     }
 
     private void toggleMealsView() {
