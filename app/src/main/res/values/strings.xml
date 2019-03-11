@@ -23,6 +23,7 @@
     <string name="main_info_bmi">Painoindeksi:</string>
     <string name="main_info_energy_consump">Energiankulutus (arv.):</string>
     <string name="unit_energy">kcal</string>
+    <string name="unit_energy_kj">kJ</string>
     <string name="main_meals_header">Syödyt ruoat</string>
     <string name="main_meals_show">Näytä</string>
     <string name="main_meals_hide">Piilota</string>
@@ -45,4 +46,6 @@
     <string name="unit_grams">g</string>
     <string name="amount_zero">0</string>
     <string name="buttonEat">Syö</string>
+    <string name="snackbar_eat_message">Söit:</string>
+    <string name="food_quantity_update">Muutettu</string>
 </resources>

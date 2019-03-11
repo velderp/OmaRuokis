@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 /**
  * Annotated class for Room to create database from. Represent different "foodname_??" database tables acquired from Fineli's Open Data.
  * Implements Parcelable to pass Foodname objects with Intends. Refer to Fineli_Rel_19/descript.txt for all Fineli's table descriptions.
+ * @author Mika
  */
 public class FoodName implements Parcelable {
 

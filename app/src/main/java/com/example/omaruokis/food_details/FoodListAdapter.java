@@ -16,12 +16,15 @@ import com.project.omaruokis.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapter for recyclerview of FoodSearchActivity. For displaying favorite foods and search results and
+ * provides user inter activity for clicked items, opening details view for food or favoriting it.
+ */
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordViewHolder> {
 
     private final LayoutInflater inflater;
     private List<FoodNameFi> foodNameFis; // Cached copy of foodNames are search result or matching FOODIDs from favorites
     private FoodRoomDatabase db;
-    private List<Favorite> favorites; // Cached copy of favorites that are in favorite table
     private List<Integer> favoritesFoodIds; // Cached copy of FOODIDs that are in favorite table
 
     FoodListAdapter(Context context) {
@@ -46,6 +49,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
             holder.wordItemView.setText("No Food");
         }
 
+        //sets the favorite star indicator according to the "favorite" table.
         if(favoritesFoodIds.contains(foodNameFis.get(position).getFoodId())){
             holder.imageView.setImageAlpha(255);
         }else{
@@ -53,11 +57,19 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
         }
     }
 
+    /**
+     * Set the food names to be displayed in recyclerview.
+     * @param foodNameFis List<FoodNameFi> list food names to be displayed in recyclerview.
+     */
     public void setFoods(List<FoodNameFi> foodNameFis) {
         this.foodNameFis = foodNameFis;
         notifyDataSetChanged();
     }
 
+    /**
+     * Set the current favorite foods to show as favorites in recyclerview.
+     * @param favorites List<Favorite> list of favorites.
+     */
     void setFavorites(List<Favorite> favorites){
         favoritesFoodIds.clear();
         if(favorites != null){
@@ -95,6 +107,12 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
             imageView.setOnClickListener(this);
         }
 
+        /**
+         * Action to perform depending on clicked recyclerview view.
+         * Start FoodDetails Activity about clicked food or
+         * add clicked foot to "favorites" table
+         * @param v
+         */
         @Override
         public void onClick(View v) {
             if(v == wordItemView) {
@@ -105,28 +123,35 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
                 v.getContext().startActivity(intent);
             }else if(v == imageView){
                 //add taped object FOODID to favorite table if it is not there else remove it from there
-                new insertAsyncTask(db.wordDao()).execute(new Favorite(foodNameFis.get(getLayoutPosition()).getFoodId()));
+                new insertAsyncTask(db.foodDao()).execute(new Favorite(foodNameFis.get(getLayoutPosition()).getFoodId()));
             }
         }
 
 
 
     }
-    //async for sql
+    /**
+     * AsyncTask for deleteFavorite operation, to not block the UI with potentially long-running operation.
+     * Room requires it to be so.
+     */
     private static class insertAsyncTask extends AsyncTask<Favorite, Void, Void> {
 
-        private FoodDao mAsyncTaskDao;
+        private FoodDao asyncTaskDao;
 
         insertAsyncTask(FoodDao dao) {
-            mAsyncTaskDao = dao;
+            asyncTaskDao = dao;
         }
 
+        /**
+         * Remove favorite from "favorite" table
+         * @param favorite Favorite favorite to be removed from "favorite" table.
+         */
         @Override
-        protected Void doInBackground(final Favorite... params) {
-            if(mAsyncTaskDao.findFavorite(params[0].getFoodId()).isEmpty()) {
-                    mAsyncTaskDao.insert(params[0]);
+        protected Void doInBackground(final Favorite... favorite) {
+            if(asyncTaskDao.findFavorite(favorite[0].getFoodId()).isEmpty()) {
+                    asyncTaskDao.insert(favorite[0]);
             }else{
-                mAsyncTaskDao.deleteFavorite(params[0]);
+                asyncTaskDao.deleteFavorite(favorite[0]);
             }
             return null;
         }

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 /**
  * Annotated class for Room to create database from. Represent "foodname_SV" database table acquired from Fineli's Open Data.
  * Refer to Fineli_Rel_19/descript.txt for all Fineli's table descriptions.
+ * @author Mika
  */
 @Entity(tableName = "foodname_SV")
 public class FoodNameSv extends FoodName{

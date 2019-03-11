@@ -9,6 +9,7 @@ import java.io.OutputStream;
 
 /**
  * File copy methods
+ * @author Mika
  */
 public class FileCopy {
     private static final FileCopy ourInstance = new FileCopy();
@@ -24,13 +25,13 @@ public class FileCopy {
     /**
      * Copy asset database to application's local database folder.
      * @param context context in which file copy if performed.
-     * @throws IOException
+     * @throws IOException file copy failed
      */
-    public void copyAssetDatabase(Context context) throws IOException {
+    public void copyAssetDatabase(Context context, String dbName) throws IOException {
         // Location from which to copy
-        InputStream inputStream = context.getAssets().open("word_database");
+        InputStream inputStream = context.getAssets().open(dbName);
         // File destination
-        OutputStream outputStream = new FileOutputStream(context.getDatabasePath("word_database"));
+        OutputStream outputStream = new FileOutputStream(context.getDatabasePath(dbName));
         byte[] buffer = new byte[8192];
         // Copy the file.
         int length = inputStream.read(buffer);

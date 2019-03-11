@@ -6,6 +6,11 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+/**
+ * Annotated class for Room to create database table "users_day" from.
+ * Stores users activity level and weight for the day.
+ * @author Mika
+ */
 @Entity(tableName = "users_day")
 public class UsersDay {
     @PrimaryKey

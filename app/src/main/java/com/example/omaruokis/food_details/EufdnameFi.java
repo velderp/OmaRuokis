@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 /**
  * Annotated class for Room to create database from. Represent "eufdname_FI" database table acquired from Fineli's Open Data.
  * Refer to Fineli_Rel_19/descript.txt for all Fineli's table descriptions.
+ * @author Mika
  */
 @Entity(tableName = "eufdname_FI")
 public class EufdnameFi {

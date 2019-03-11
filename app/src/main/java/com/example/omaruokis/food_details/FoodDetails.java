@@ -3,9 +3,10 @@ package com.example.omaruokis.food_details;
 import android.arch.persistence.room.ColumnInfo;
 
 /**
- * Annotated class for Room to create objects from. It is not stored at database but is composed from
- * other tables with sql queries for usage in application. Contains table columns from Fineli's Open Data:
- * "eufdname_FI.DESCRIPT", "component_value.BESTLOC","component.COMPUNIT"
+ * Annotated class for Room to create objects from. It is not stored at database. It is composed from
+ * other tables with sql queries, for usage in application. Contains table columns from Fineli's Open Data:
+ * "eufdname_FI.DESCRIPT", "component_value.BESTLOC", "component.COMPUNIT"
+ * @author Mika
  */
 public class FoodDetails {
 
