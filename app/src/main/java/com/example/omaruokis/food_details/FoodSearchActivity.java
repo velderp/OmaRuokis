@@ -16,7 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.project.omaruokis.R;
+import com.example.omaruokis.R;
 
 import java.util.List;
 

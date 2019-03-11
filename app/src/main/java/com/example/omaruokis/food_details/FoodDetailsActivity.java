@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.project.omaruokis.R;
+import com.example.omaruokis.R;
 
 import java.util.List;
 

@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.example.omaruokis.food_details.FoodDao;
 import com.example.omaruokis.food_details.FoodEaten;
 import com.example.omaruokis.food_details.FoodRoomDatabase;
-import com.project.omaruokis.R;
 
 import java.util.List;
 

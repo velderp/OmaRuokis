@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.project.omaruokis.R;
+import com.example.omaruokis.R;
 
 import java.util.ArrayList;
 import java.util.List;

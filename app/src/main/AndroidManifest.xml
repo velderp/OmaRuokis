@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.project.omaruokis">
+    package="com.example.omaruokis">
 
     <application
         android:allowBackup="true"
@@ -29,7 +29,8 @@
             android:name="com.example.omaruokis.food_details.FoodDetailsActivity"
             android:parentActivityName="com.example.omaruokis.food_details.FoodSearchActivity"
             android:label="@string/title_activity_food_details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name="com.example.omaruokis.food_details.FoodSearchActivity"
             android:parentActivityName="com.example.omaruokis.MainActivity"

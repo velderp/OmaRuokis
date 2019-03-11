@@ -18,7 +18,8 @@ public class BodyCalc {
 
     private int calcBmr(){
         int sex = (this.sex.equals("M")) ? 5 : -161;
-        return (int) (10 * this.weight + 6.25 * this.height - 5 * this.age + sex);
+        int bmrKcal = (int) (10 * this.weight + 6.25 * this.height - 5 * this.age + sex);
+        return (int) (bmrKcal * 4.1868);
     }
     public int calcTee(){
         return (int) (calcBmr() * this.activityLevel);

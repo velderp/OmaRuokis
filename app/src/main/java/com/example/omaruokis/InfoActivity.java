@@ -1,9 +1,7 @@
 package com.example.omaruokis;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import com.project.omaruokis.R;
+import android.support.v7.app.AppCompatActivity;
 
 public class InfoActivity extends AppCompatActivity {
 
