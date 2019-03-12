@@ -368,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
             proteins += foodEatens.get(i).calculateTotalProteins();
         }
         HashMap<String, String> nutrients = new HashMap<>();
-        nutrients.put("Calories", Integer.toString((int) (calories / 4.18400));
+        nutrients.put("Calories", Integer.toString((int) (calories / 4.18400)));
         nutrients.put("Carbs", Integer.toString(carbs));
         nutrients.put("Lipids", Integer.toString(lipids));
         nutrients.put("Proteins", Integer.toString(proteins));
