@@ -20,6 +20,7 @@
     <string name="user_info_saved">Tiedot tallennettu.</string>
     <string name="unit_weight">kg</string>
     <string name="unit_height">cm</string>
+    <string name="main_activity_level">Fyysinen aktiivisuus:</string>
     <string name="main_info_bmi">Painoindeksi:</string>
     <string name="main_info_energy_consump">Energiankulutus (arv.):</string>
     <string name="unit_energy">kJ</string>

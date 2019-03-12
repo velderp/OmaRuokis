@@ -7,6 +7,8 @@ package com.example.omaruokis.utilities;
  */
 
 public class BodyCalc {
+    private static final double PAL_INCREMENTS = 0.3;
+    private static final double PAL_MINIMUM = 1.0;
     private int weight;
     private int height;
     private int age;
@@ -49,7 +51,7 @@ public class BodyCalc {
      */
 
     public int calcTee(){
-        return (int) (calcBmr() * this.activityLevel);
+        return (int) (calcBmr() * (this.activityLevel * PAL_INCREMENTS + PAL_MINIMUM));
     }
 
     /**

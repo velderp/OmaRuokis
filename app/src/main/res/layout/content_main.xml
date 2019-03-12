@@ -94,7 +94,7 @@
             android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@string/user_info_activity_level"
+            android:text="@string/main_activity_level"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editMainWeight" />

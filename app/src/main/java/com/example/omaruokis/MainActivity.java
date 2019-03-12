@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * <code>MainActivity</code> UI logic.
+ * Main Activity UI logic.
  *
  * @author  Veli-Pekka
  */
@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String HM_KEY_CARBS = "Carbs";
     private static final String HM_KEY_LIPIDS = "Lipids";
     private static final String HM_KEY_PROTEINS = "Proteins";
-    private static final double PAL_INCREMENTS = 0.3;
-    private static final double PAL_MINIMUM = 1.0;
     private DatePickerDialog datePickerDialog;
     private FoodViewModel foodViewModel;
     private MealsListAdapter mealsListAdapter;
@@ -105,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
         updateUI();
     }
 
+    /**
+     * Adds items to the action bar.
+     *
+     * @param   menu    A resource file that defines an application menu.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -112,6 +115,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Handles action bar clicks.
+     *
+     * @param   item    clicked action bar menu item
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -132,6 +140,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Updates UI according to selected date and <code>SharedPreferences</code>
+     * InfoFilled state.
+     *
+     * @see #getDetailsFromDB()
+     */
     private void updateUI() {
         setDate();
         if (userPrefs.prefGetInfoFilled()) {
@@ -142,18 +156,22 @@ public class MainActivity extends AppCompatActivity {
             }
             getDetailsFromDB();
         }
-        toggleMealsView();
+        setMealsVisibility();
     }
 
+    /**
+     * Checks if weight is valid and if <code>true</code>, calculates BMI and TEE
+     * and updates the corresponding UI widgets, otherwise urges the user to check
+     * the weight input.
+     */
     private void bodyCalc() {
         InputChecker checker = new InputChecker();
-        if (checker.checkInt(weightEditText.getText().toString(), UserPrefs.MIN_WEIGHT,
-                UserPrefs.MAX_WEIGHT)) {
-            int weight = Integer.parseInt(weightEditText.getText().toString());
+        String weightInput = weightEditText.getText().toString();
+        if (checker.checkInt(weightInput, UserPrefs.MIN_WEIGHT, UserPrefs.MAX_WEIGHT)) {
+            int weight = Integer.parseInt(weightInput);
             int height = userPrefs.prefGetUserHeight();
             String sex = userPrefs.prefGetUserSex();
-            double pal = activityLevelSpinner.getSelectedItemPosition() * PAL_INCREMENTS
-                    + PAL_MINIMUM;
+            double pal = activityLevelSpinner.getSelectedItemPosition();
             String dob = userPrefs.prefGetUserDob();
             String date = dateTextView.getText().toString();
             BodyCalc calc = new BodyCalc(weight, height, sex, pal, dob, date);
@@ -162,10 +180,14 @@ public class MainActivity extends AppCompatActivity {
             tv = findViewById(R.id.textMainCalcTee);
             tv.setText(String.format(Locale.forLanguageTag(LOCALE), "%d", calc.calcTee()));
         } else {
-            errorMessage(getString(R.string.main_weight_error));
+            showMessage(getString(R.string.main_weight_error));
         }
     }
 
+    /**
+     * Creates the date picker dialog and listener. Updates the entire UI to show
+     * the selected date's information.
+     */
     private void setDatePicker() {
         Calendar calendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this,
@@ -183,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                     bodyCalc();
                     updateUI();
                 } else {
-                    errorMessage(getString(R.string.main_date_error));
+                    showMessage(getString(R.string.main_date_error));
                 }
             }
 
@@ -191,7 +213,12 @@ public class MainActivity extends AppCompatActivity {
                 calendar.get(Calendar.DAY_OF_MONTH));
     }
 
+    /**
+     * Sets listeners for UI buttons.
+     *
+     */
     private void setListeners() {
+        // Calendar button
         findViewById(R.id.mainCalendarButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Reset date button
         findViewById(R.id.mainCurrentDateButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -208,34 +236,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Show/hide meals toggle
         findViewById(R.id.mainToggleMeals).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Show/hide meals
                 updateUI();
             }
         });
+
 
         findViewById(R.id.mainSaveButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Save meals to database
                 String date = dateHolder.selectedDateToString();
+                String weightInput = weightEditText.getText().toString();
                 int activityLevel = activityLevelSpinner.getSelectedItemPosition();
-                int weight = Integer.parseInt(weightEditText.getText().toString());
+                int weight = Integer.parseInt(weightInput);
                 UsersDay usersDay = new UsersDay(date, activityLevel, weight);
                 foodViewModel.insertUsersDay(usersDay);
+                // Save weight to user info if current date is selected
                 if (selectedDateIsToday()) {
-                    saveWeightToPrefs();
+                    userPrefs.prefSetUserWeight(weightInput);
                 }
+                // Update relevant UI widgets
+                bodyCalc();
                 updateUI();
             }
         });
 
+        // Activity level spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.activity_level_array_fi));
         activityLevelSpinner.setAdapter(adapter);
+        // Update BMI and TEE when activity level is changed
         activityLevelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -243,9 +278,11 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                // Nothing needed
             }
         });
 
+        // Food search button
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,28 +294,53 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Updates date text view to selected date.
+     */
     private void setDate() {
         String date = dateHolder.selectedDateToString();
         dateTextView.setText(date);
     }
 
+    /**
+     * Checks whether the selected date is the current day.
+     *
+     * @return  Returns <code>true</code> if selected date is the current date,
+     *          <code>false</code> otherwise.
+     */
     private boolean selectedDateIsToday() {
         String date = dateHolder.selectedDateToString();
         return date.equals(dateHolder.currentDateToString());
     }
 
-    private void errorMessage(String message) {
+    /**
+     *  Shows a snackback message with the given <code>message</code> string.
+     *
+     * @param   message message to show
+     */
+    private void showMessage(String message) {
         View view = findViewById(R.id.mainContents);
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).
+                setAction("Action", null).show();
     }
 
+    /**
+     * Checks if a given date is the user's date of birth or later.
+     *
+     * @param   calendar    <code>calendar</code> with the date to check
+     * @return              Returns <code>true</code> if given date is on or after the user's
+     *                      date of birth, <code>false</code> otherwise.
+     */
     private boolean isAfterBirth (Calendar calendar) {
         Formatter formatter = new Formatter();
         return calendar.after(formatter.dateStringToCalendar(userPrefs.prefGetUserDob()));
     }
 
-    private void toggleMealsView() {
+    /**
+     * Checks whether the show/hide meals toggle is checked or not and sets
+     * meal list visibility accordingly.
+     */
+    private void setMealsVisibility() {
         ToggleButton toggleButton = findViewById(R.id.mainToggleMeals);
         RecyclerView recyclerView = findViewById(R.id.mainRecyclerviewMeals);
         if (toggleButton.isChecked()) {
@@ -288,13 +350,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void saveWeightToPrefs() {
-        String weight = weightEditText.getText().toString();
-        userPrefs.prefSetUserWeight(weight);
-    }
-
+    /**
+     * Gets the selected day's user details from the database. If no entry is found,
+     * a new one is created.
+     *
+     * @see #createUsersDay()
+     */
     private void getDetailsFromDB() {
+        // Make sure the date is set before getting details from database. This seemed
+        // to fix a bug where user details were kept from previously selected
+        // date's details instead of fetched from saved user details. Race condition?
         setDate();
+
         String date = dateHolder.selectedDateToString();
         LiveData<UsersDay> dayLiveData = foodViewModel.findUsersDayByDate(date);
         dayLiveData.observe(this, new Observer<UsersDay>() {
@@ -309,9 +376,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        // Update nutrient intake values
         updateNutrients();
     }
 
+    /**
+     * Updates meal list view to show selected date's meals.
+     */
     private void updateAdapter(){
         String date = dateHolder.selectedDateToString();
         LiveData<List<FoodEaten>> listLiveData = foodViewModel.findFoodEatenByDate(date);
@@ -323,17 +394,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Creates a new <code>usersDay</code> entry with the selected date and saved
+     * user details and inserts it into the database.
+     */
     private void createUsersDay() {
         String date = dateHolder.selectedDateToString();
         int activityLevel = userPrefs.prefGetUserPal();
         int weight = userPrefs.prefGetUserWeight();
         UsersDay usersDay = new UsersDay(date, activityLevel, weight);
         foodViewModel.insertUsersDay(usersDay);
-        weightEditText.setText(String.format(Locale.forLanguageTag(LOCALE), "%d",
-                usersDay.getWeight()));
-        activityLevelSpinner.setSelection(usersDay.getActivityLevel());
+        activityLevelSpinner.setSelection(activityLevel);
+        weightEditText.setText(String.format(Locale.forLanguageTag(LOCALE), "%d", weight));
     }
 
+    /**
+     * Gets a list of saved meals for the selected date and updates nutrient
+     * intake values.
+     *
+     * @see #calcNutrients(List)
+     */
     private void updateNutrients() {
         String date = dateHolder.selectedDateToString();
         LiveData<List<FoodEaten>> listLiveData = foodViewModel.findFoodEatenByDate(date);
@@ -356,23 +436,31 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sums some nutritional values from a list of meals and
+     * returns them as a <code>HashMap</code>.
+     *
+     * @param   foodEatens  a list of meals
+     * @return              sums of calories, carbs, lipids and proteins in a <code>HashMap</code>
+     */
     private HashMap<String, String> calcNutrients(List<FoodEaten> foodEatens) {
         int calories = 0;
         int carbs = 0;
         int lipids = 0;
         int proteins = 0;
+        // Sums array's calorie, carb, lipid and protein amounts
         for (int i = 0; i < foodEatens.size(); i++){
             calories += foodEatens.get(i).calculateTotalEnergy();
             carbs += foodEatens.get(i).calculateTotalCarbohydrates();
             lipids += foodEatens.get(i).calculateTotalFat();
             proteins += foodEatens.get(i).calculateTotalProteins();
         }
+        // Store sums in a HashMap and return it
         HashMap<String, String> nutrients = new HashMap<>();
         nutrients.put("Calories", Integer.toString(calories));
         nutrients.put("Carbs", Integer.toString(carbs));
         nutrients.put("Lipids", Integer.toString(lipids));
         nutrients.put("Proteins", Integer.toString(proteins));
-
         return nutrients;
     }
 }
