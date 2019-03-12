@@ -20,6 +20,12 @@ import com.example.omaruokis.food_details.FoodRoomDatabase;
 
 import java.util.List;
 
+/**
+ * Adapter for recyclerview of MainActivity. For displaying FoodEaten objects.
+ * Displays eaten food names and provides user inter activity for clicked items, setting
+ * quantity of food eaten and removing eaten food.
+ * @author Mika
+ */
 public class MealsListAdapter extends RecyclerView.Adapter<MealsListAdapter.MealsHolder> {
 
     private final LayoutInflater inflater;
@@ -49,6 +55,10 @@ public class MealsListAdapter extends RecyclerView.Adapter<MealsListAdapter.Meal
         }
     }
 
+    /**
+     * Meals that were eaten given day.
+     * @param foodEaten list of eaten food to display in recycler view.
+     */
     public void setMeals(List<FoodEaten> foodEaten){
         if( meals != null) {
             meals.clear();
@@ -76,7 +86,9 @@ public class MealsListAdapter extends RecyclerView.Adapter<MealsListAdapter.Meal
         private MealsHolder(final View itemView, MealsListAdapter adapter){
             super(itemView);
             textViewMealTextFoodName = itemView.findViewById(R.id.mealTextFoodName);
+            //For mass of consumed meal
             editTextMealEditText = itemView.findViewById(R.id.mealEditText);
+            //For removing eaten food from "food_eaten" table.
             imageViewMealButtonRemove = itemView.findViewById(R.id.mealButtonRemove);
             this.adapter = adapter;
 
@@ -100,10 +112,15 @@ public class MealsListAdapter extends RecyclerView.Adapter<MealsListAdapter.Meal
 
         @Override
         public void onClick(View v) {
+            //remove the eaten food from "food_eaten" table.
             new deleteAsyncTask(db.foodDao()).execute(meals.get(getLayoutPosition()));
         }
     }
 
+    /**
+     * AsyncTask for deleteFoodEaten operation, to not block the UI
+     * with potentially long-running operation. Room requires it to be so.
+     */
     private static class deleteAsyncTask extends AsyncTask<FoodEaten, Void, Void>{
 
         private FoodDao asyncTaskDao;
@@ -118,6 +135,11 @@ public class MealsListAdapter extends RecyclerView.Adapter<MealsListAdapter.Meal
             return null;
         }
     }
+
+    /**
+     * AsyncTask for updateFoodEatenQuantity operation, to not block the UI
+     * with potentially long-running operation. Room requires it to be so.
+     */
     private static class setFoodEatenQuantityAsyncTask extends AsyncTask<FoodEaten, Void, Void>{
 
         private FoodDao asyncTaskDao;

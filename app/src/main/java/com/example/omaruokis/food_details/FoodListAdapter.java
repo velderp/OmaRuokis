@@ -132,8 +132,8 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
 
     }
     /**
-     * AsyncTask for deleteFavorite operation, to not block the UI with potentially long-running operation.
-     * Room requires it to be so.
+     * AsyncTask for deleteFavorite and inserting favorite operation, to not
+     * block the UI with potentially long-running operation. Room requires it to be so.
      */
     private static class insertAsyncTask extends AsyncTask<Favorite, Void, Void> {
 
@@ -144,8 +144,8 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.WordVi
         }
 
         /**
-         * Remove favorite from "favorite" table
-         * @param favorite Favorite favorite to be removed from "favorite" table.
+         * Remove or add favorite to "favorite" table
+         * @param favorite Favorite favorite to be removed or added to "favorite" table.
          */
         @Override
         protected Void doInBackground(final Favorite... favorite) {
