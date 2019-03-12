@@ -27,7 +27,7 @@
     <string name="main_meals_show">Näytä</string>
     <string name="main_meals_hide">Piilota</string>
     <string name="hint_word">Hakusana</string>
-    <string name="title_activity_food_details">Ravintosisältö, per 100 g</string>
+    <string name="title_activity_food_details">Ravintosisältö per 100 g</string>
     <string name="search">Haku</string>
     <string name="foodname">Hakusana</string>
     <string name="find">Hae</string>
