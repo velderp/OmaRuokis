@@ -1,5 +1,11 @@
 package com.example.omaruokis.utilities;
 
+/**
+ * BodyCalc includes calculations for BMR: Basal metabolic rate, TEE: total energy expenditure,
+ * BMI: body mass index and Age.
+ * @author Juha
+ */
+
 public class BodyCalc {
     private int weight;
     private int height;
