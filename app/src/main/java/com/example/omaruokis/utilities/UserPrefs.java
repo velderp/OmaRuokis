@@ -20,7 +20,7 @@ public class UserPrefs extends InputChecker {
     private static final String USER_INFO_FILLED = "InfoFilled";
     // User details min/max values
     private static final int MIN_YEAR = 1903;
-    private static final int MAX_YEAR = 2200;
+    private static final int MAX_YEAR = 2100;
     private static final int MIN_HEIGHT = 24;
     private static final int MAX_HEIGHT = 272;
     public static final int MIN_WEIGHT = 1;
