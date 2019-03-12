@@ -28,7 +28,7 @@ import com.example.omaruokis.food_details.FoodEaten;
 import com.example.omaruokis.food_details.FoodSearchActivity;
 import com.example.omaruokis.food_details.FoodViewModel;
 import com.example.omaruokis.food_details.UsersDay;
-import com.project.omaruokis.R;
+import com.example.omaruokis.utilities.Formatter;
 import com.example.omaruokis.utilities.BodyCalc;
 import com.example.omaruokis.utilities.DateHolder;
 import com.example.omaruokis.utilities.InputChecker;
@@ -39,6 +39,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * <code>MainActivity</code> UI logic.
+ *
+ * @author  Veli-Pekka
+ */
 public class MainActivity extends AppCompatActivity {
 
     static final String LOCALE = "fi-FI";
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText weightEditText;
     private Spinner activityLevelSpinner;
     private UserPrefs userPrefs;
+    private DateHolder dateHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         weightEditText = findViewById(R.id.editMainWeight);
         activityLevelSpinner = findViewById(R.id.spinnerMainActivityLevel);
         userPrefs = new UserPrefs(this);
+        dateHolder = DateHolder.getInstance();
 
         ToggleButton toggleButton = findViewById(R.id.mainToggleMeals);
         toggleButton.setChecked(true);
@@ -169,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 newDate.set(year, monthOfYear, dayOfMonth);
 
                 if (isAfterBirth(newDate)) {
-                    DateHolder.getInstance().setDate(newDate.getTime());
+                    dateHolder.setSelectedDate(newDate.getTime());
 
                     updateAdapter();
 
@@ -195,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.mainCurrentDateButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DateHolder.getInstance().resetDate();
+                dateHolder.resetDate();
                 updateAdapter();
                 updateUI();
             }
@@ -213,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Save meals to database
-                String date = DateHolder.getInstance().dateToString();
+                String date = dateHolder.selectedDateToString();
                 int activityLevel = activityLevelSpinner.getSelectedItemPosition();
                 int weight = Integer.parseInt(weightEditText.getText().toString());
                 UsersDay usersDay = new UsersDay(date, activityLevel, weight);
@@ -251,13 +258,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDate() {
-        String date = DateHolder.getInstance().dateToString();
+        String date = dateHolder.selectedDateToString();
         dateTextView.setText(date);
     }
 
     private boolean selectedDateIsToday() {
-        String date = DateHolder.getInstance().dateToString();
-        return date.equals(DateHolder.getInstance().currentDateToString());
+        String date = dateHolder.selectedDateToString();
+        return date.equals(dateHolder.currentDateToString());
     }
 
     private void errorMessage(String message) {
@@ -267,8 +274,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isAfterBirth (Calendar calendar) {
-        InputChecker checker = new InputChecker();
-        return calendar.after(checker.dateStringToCalendar(userPrefs.prefGetUserDob()));
+        Formatter formatter = new Formatter();
+        return calendar.after(formatter.dateStringToCalendar(userPrefs.prefGetUserDob()));
     }
 
     private void toggleMealsView() {
@@ -288,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getDetailsFromDB() {
         setDate();
-        String date = DateHolder.getInstance().dateToString();
+        String date = dateHolder.selectedDateToString();
         LiveData<UsersDay> dayLiveData = foodViewModel.findUsersDayByDate(date);
         dayLiveData.observe(this, new Observer<UsersDay>() {
             @Override
@@ -306,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateAdapter(){
-        String date = DateHolder.getInstance().dateToString();
+        String date = dateHolder.selectedDateToString();
         LiveData<List<FoodEaten>> listLiveData = foodViewModel.findFoodEatenByDate(date);
         listLiveData.observe(this, new Observer<List<FoodEaten>>() {
             @Override
@@ -317,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createUsersDay() {
-        String date = DateHolder.getInstance().dateToString();
+        String date = dateHolder.selectedDateToString();
         int activityLevel = userPrefs.prefGetUserPal();
         int weight = userPrefs.prefGetUserWeight();
         UsersDay usersDay = new UsersDay(date, activityLevel, weight);
@@ -328,21 +335,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateNutrients() {
-        String date = DateHolder.getInstance().dateToString();
+        String date = dateHolder.selectedDateToString();
         LiveData<List<FoodEaten>> listLiveData = foodViewModel.findFoodEatenByDate(date);
         listLiveData.observe(this, new Observer<List<FoodEaten>>() {
             @Override
             public void onChanged(@Nullable List<FoodEaten> foodEatens) {
-                HashMap<String, String> nutrients;
-                nutrients = calcNutrients(foodEatens);
-                TextView tv = findViewById(R.id.textMainSumCalories);
-                tv.setText(nutrients.get(HM_KEY_CALORIES));
-                tv = findViewById(R.id.textMainSumCarbs);
-                tv.setText(nutrients.get(HM_KEY_CARBS));
-                tv = findViewById(R.id.textMainSumLipids);
-                tv.setText(nutrients.get(HM_KEY_LIPIDS));
-                tv = findViewById(R.id.textMainSumProteins);
-                tv.setText(nutrients.get(HM_KEY_PROTEINS));
+                if (foodEatens != null) {
+                    HashMap<String, String> nutrients;
+                    nutrients = calcNutrients(foodEatens);
+                    TextView tv = findViewById(R.id.textMainSumCalories);
+                    tv.setText(nutrients.get(HM_KEY_CALORIES));
+                    tv = findViewById(R.id.textMainSumCarbs);
+                    tv.setText(nutrients.get(HM_KEY_CARBS));
+                    tv = findViewById(R.id.textMainSumLipids);
+                    tv.setText(nutrients.get(HM_KEY_LIPIDS));
+                    tv = findViewById(R.id.textMainSumProteins);
+                    tv.setText(nutrients.get(HM_KEY_PROTEINS));
+                }
             }
         });
     }

@@ -9,11 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.project.omaruokis.R;
+import com.example.omaruokis.R;
 
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Adapter for recyclerview of FoodDetailsActivity. For displaying FoodDetails objects.
+ * @author Mika
+ */
 public class FoodDetailsListAdapter extends RecyclerView.Adapter<FoodDetailsListAdapter.FoodDetailsHolder> {
     private final LayoutInflater inflater;
     private List<FoodDetails> foodDetails;
@@ -43,7 +47,7 @@ public class FoodDetailsListAdapter extends RecyclerView.Adapter<FoodDetailsList
             //sets food component value for display and adds unit to value
             foodDetailsHolder.textViewbestloc.setText(Double.toString(current.getBestloc()).replace('.',',') + current.getCompUnit());
         }else{
-            //when foodDetails is not yet initialized
+            //if foodDetails is not yet initialized
             foodDetailsHolder.textViewbestloc.setText("No value");
             foodDetailsHolder.textViewdesscript.setText("No descriptor");
         }
@@ -59,7 +63,6 @@ public class FoodDetailsListAdapter extends RecyclerView.Adapter<FoodDetailsList
     @Override
     public int getItemCount() {
         if(foodDetails != null) {
-            Log.d(FoodRoomDatabase.TAG, "getItemCount: " + foodDetails.size());
             return foodDetails.size();
         } else {
             return 0;

@@ -9,10 +9,15 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.example.omaruokis.utilities.UserPrefs;
-import com.project.omaruokis.R;
 
 import java.util.Locale;
 
+/**
+ * <code>UserInfoActivity</code> UI logic for getting, viewing and saving user details
+ * from and to a <code>SharedPreferences</code> file.
+ *
+ * @author  Veli-Pekka
+ */
 public class UserInfoActivity extends AppCompatActivity {
 
     private EditText dobEditText;
@@ -38,16 +43,27 @@ public class UserInfoActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Checks and saves valid user details in order and if all inputs are valid, informs
+     * the user that details have been saved. If an invalid input is detected, urges
+     * user to check their details. After saving, the details are read back from the
+     * <code>SharedPreferences</code> file in order to remove possible leading zeros
+     * from <code>TextEdit</code> fields.
+     *
+     * @author  Veli-Pekka
+     */
     public void checkAndSave(View view) {
         String date = dobEditText.getText().toString();
         String weight = weightEditText.getText().toString();
         String height = heightEditText.getText().toString();
 
         if (userPrefs.prefSetUserDob(date)
-                && sexRadioGroup.getCheckedRadioButtonId() != -1
+                && sexRadioGroup.getCheckedRadioButtonId() != -1    // if RadioButton is checked
                 && userPrefs.prefSetUserWeight(weight)
                 && userPrefs.prefSetUserHeight(height)) {
-            String sex = (sexRadioGroup.getCheckedRadioButtonId() == R.id.radioButtonMale) ? "M" : "F";
+            String sex = (sexRadioGroup.getCheckedRadioButtonId()
+                    == R.id.radioButtonMale) ? "M" : "F";
             userPrefs.prefSetUserSex(sex);
             userPrefs.prefSetUserPal(activityLevelSpinner.getSelectedItemPosition());
             userPrefs.prefSetInfoFilled(true);
@@ -60,6 +76,10 @@ public class UserInfoActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Reads saved user details from a <code>SharedPreferences</code> file and updates
+     * UI widgets.
+     */
     private void getUserInfo() {
         dobEditText.setText(userPrefs.prefGetUserDob());
         weightEditText.setText(String.format(Locale.forLanguageTag(MainActivity.LOCALE), "%d",

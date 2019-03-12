@@ -6,7 +6,7 @@
     <string name="user_info_sex">Sukupuoli:</string>
     <string name="user_info_weight">Paino:</string>
     <string name="user_info_height">Pituus:</string>
-    <string name="user_info_activity_level">Fyysinen aktiivisuus:</string>
+    <string name="user_info_activity_level">Fyysinen aktiivisuus (oletus):</string>
     <string name="button_save">Tallenna</string>
     <string name="user_info_male">Mies</string>
     <string name="user_info_female">Nainen</string>
@@ -22,12 +22,12 @@
     <string name="unit_height">cm</string>
     <string name="main_info_bmi">Painoindeksi:</string>
     <string name="main_info_energy_consump">Energiankulutus (arv.):</string>
-    <string name="unit_energy">kcal</string>
+    <string name="unit_energy">kJ</string>
     <string name="main_meals_header">Syödyt ruoat</string>
     <string name="main_meals_show">Näytä</string>
     <string name="main_meals_hide">Piilota</string>
     <string name="hint_word">Hakusana</string>
-    <string name="title_activity_food_details">Ruoan tiedot</string>
+    <string name="title_activity_food_details">Ravintosisältö per 100 g</string>
     <string name="search">Haku</string>
     <string name="foodname">Hakusana</string>
     <string name="find">Hae</string>
@@ -38,11 +38,13 @@
     <string name="title_activity_food_search">Ruoan haku</string>
     <string name="results">Haku tulokset:</string>
     <string name="main_nutrients_header">Päivän saanti</string>
-    <string name="main_nutrients_calories">Kalorit:</string>
+    <string name="main_nutrients_calories">Energia:</string>
     <string name="main_nutrients_carbs">Hiilihydraatti:</string>
     <string name="main_nutrients_lipids">Rasva:</string>
     <string name="main_nutrients_proteins">Proteiini:</string>
     <string name="unit_grams">g</string>
     <string name="amount_zero">0</string>
     <string name="buttonEat">Syö</string>
+    <string name="snackbar_eat_message">Söit:</string>
+    <string name="food_quantity_update">Muutettu</string>
 </resources>

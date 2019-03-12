@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import com.project.omaruokis.R;
+import android.widget.Toast;
+
+import com.example.omaruokis.R;
 
 import java.util.List;
 
@@ -20,6 +23,7 @@ import java.util.List;
  * Android Activity ui logic for food component names, food component quantities, units for food component quantities.
  * Displaying Food details composed of aforementioned in recyclerview.
  * Button for adding food in question to foods_eaten Room database table.
+ * @author Mika
  */
 public class FoodDetailsActivity extends AppCompatActivity {
 
@@ -68,7 +72,7 @@ public class FoodDetailsActivity extends AppCompatActivity {
      * Stored in Room database food_eaten table.
      * @param view
      */
-    public void buttonAddDaysFood(View view){
+    public void buttonAddDaysFood(final View view){
         final FoodEaten foodEaten = new FoodEaten(foodName.getFoodName(), foodName.getFoodId());
         foodViewModel.getFoodIdComponetValues(foodName.getFoodId()).observe(this, new Observer<List<ComponentValue>>() {
             @Override
@@ -80,8 +84,8 @@ public class FoodDetailsActivity extends AppCompatActivity {
                 foodEaten.setProt(componentValues.get(3).getBestLoc());
                 //add the finalized object to database
                 foodViewModel.insertFoodEaten(foodEaten);
-
-                Log.d(FoodRoomDatabase.TAG, "onChanged: "+ foodEaten.getFoodName() + " " + foodEaten.getFoodId() + " " + foodEaten.getFat());
+                //Confirm to user that action was performed.
+                Snackbar.make(view,getString(R.string.snackbar_eat_message)+ " " + foodEaten.getFoodName(), Snackbar.LENGTH_SHORT).show();
             }
         });
     }

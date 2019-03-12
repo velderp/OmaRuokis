@@ -8,6 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 /**
  * Annotated class for Room to create database table from.
  * Stores users favorite foods foodIds.
+ * @author Mika
  */
 @Entity(tableName = "favorite")
 public class Favorite {
